@@ -2,13 +2,14 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background-color: var(--background-neutral-primary);
+  background-color: var(--background-neutral-main);
   font-style: normal;
   font-family:
     'Inter',
     -apple-system,
     serif;
   font-size: 16px;
+  color: var(--text-neutral-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
