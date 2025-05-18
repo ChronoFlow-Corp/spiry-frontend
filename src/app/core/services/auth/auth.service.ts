@@ -53,9 +53,7 @@ export class AuthService {
     }
 
     return this.#http
-      .get<UserInfo>(`${this.#environment.apiUrl}/users/me`, {
-        headers: {Authorization: `Bearer ${token}`},
-      })
+      .get<UserInfo>(`${this.#environment.apiUrl}/users/me`)
       .pipe(
         retry(2),
         tap(({username}) => {
