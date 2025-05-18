@@ -1,0 +1,9 @@
+$cursors: (
+  pointer: p,
+);
+
+@each $key, $value in $cursors {
+  .c-#{$key} {
+    cursor: #{$key};
+  }
+}

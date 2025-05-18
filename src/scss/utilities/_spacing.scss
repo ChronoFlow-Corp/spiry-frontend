@@ -1,0 +1,10 @@
+$marginDirections: (
+  top: t,
+  left: l,
+);
+
+@each $key, $value in $marginDirections {
+  .m#{$value}-a {
+    margin-#{$key}: auto;
+  }
+}
