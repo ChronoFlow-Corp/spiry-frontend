@@ -4,10 +4,8 @@ body {
   width: 100%;
   background-color: var(--background-neutral-main);
   font-style: normal;
-  font-family:
-    'Inter',
-    -apple-system,
-    serif;
+  font-family: var(--font-inter);
+  font-weight: 400;
   font-size: 16px;
   color: var(--text-neutral-primary);
   -webkit-font-smoothing: antialiased;
