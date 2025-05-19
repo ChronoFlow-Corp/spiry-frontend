@@ -17,7 +17,7 @@ import {routes} from './app.routes';
 import {ThemeService} from '@service/theme/theme.service';
 import {environment} from '@environments/environment';
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
-import {authInterceptor} from '@interceptor/token/token.interceptor';
+import {tokenInterceptor} from '@interceptor/token/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules),
       withInMemoryScrolling({scrollPositionRestoration: 'top'}),
     ),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([tokenInterceptor])),
     provideAppInitializer(() => inject(ThemeService).init()),
     {provide: ENVIRONMENT_TOKEN, useValue: environment},
   ],

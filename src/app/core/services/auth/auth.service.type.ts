@@ -3,14 +3,14 @@ import {Signal} from '@angular/core';
 export const LOCAL_STORAGE_AUTH_TOKEN = 'token';
 
 export interface SuccessfulAuth {
-  jwt: string;
+  readonly jwt: string;
 }
 
 export interface UserInfo {
-  id: number;
-  documentId: string;
-  username: string;
-  email: string;
+  readonly id: number;
+  readonly documentId: string;
+  readonly username: string;
+  readonly email: string;
 }
 
 export interface AuthServiceState {

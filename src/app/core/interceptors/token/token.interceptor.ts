@@ -4,7 +4,7 @@ import {inject} from '@angular/core';
 import {AuthService} from '@service/auth/auth.service';
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getToken();
 
