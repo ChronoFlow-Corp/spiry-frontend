@@ -1,0 +1,50 @@
+:host {
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--transparent-overlay-overlay-light);
+}
+
+.shared-global-loader__wrapper {
+  width: 23.5625rem;
+  padding: 2rem;
+  gap: 1.25rem;
+  background-color: var(--background-neutral-active-white);
+
+  border-radius: 1.5rem;
+  border: 0.078125rem solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0.25rem 2.775rem 0 rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.015625rem);
+
+  .shared-icon {
+    animation-duration: 2.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-name: loading-spinner;
+  }
+
+  .shared-global-loader__info {
+    gap: 0.25rem;
+
+    &-title {
+      color: var(--text-neutral-primary);
+
+      text-align: center;
+      font-family: var(--font-bricolage-grotesque);
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 2rem;
+      letter-spacing: -0.03rem;
+    }
+
+    &-subtitle {
+      color: var(--text-neutral-tertiary);
+
+      font-family: var(--font-inter);
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5rem;
+    }
+  }
+}

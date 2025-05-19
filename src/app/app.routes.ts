@@ -6,6 +6,7 @@ export const routes: Routes = [
     path: 'web',
     loadComponent: () =>
       import('@pages/web/web.component').then((c) => c.WebComponent),
+    children: [{path: '**', pathMatch: 'full', redirectTo: ''}],
   },
   {path: '**', redirectTo: 'web'},
 ];

@@ -1,0 +1,13 @@
+.page-web__wrapper {
+  .shared-global-loader {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .shared-account-menu {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.75rem;
+    z-index: 1;
+  }
+}
