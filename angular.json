@@ -64,7 +64,13 @@
               "sourceMap": true,
               "stylePreprocessorOptions": {
                 "includePaths": ["src/scss"]
-              }
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/app/core/environments/environment.ts",
+                  "with": "src/app/core/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

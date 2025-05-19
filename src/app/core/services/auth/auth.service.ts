@@ -5,7 +5,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {
   catchError,
   delay,
@@ -19,9 +19,12 @@ import {
 } from 'rxjs';
 
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
-import {SuccessfulAuth, UserInfo} from '@service/auth/auth.service.type';
-
-const LOCAL_STORAGE_TOKEN = 'token';
+import {
+  AuthServiceState,
+  LOCAL_STORAGE_AUTH_TOKEN,
+  SuccessfulAuth,
+  UserInfo,
+} from '@service/auth/auth.service.type';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -31,22 +34,21 @@ export class AuthService {
   readonly GOOGLE_AUTH_URL = `${this.#environment.apiUrl}/connect/google`;
 
   readonly #isAuthenticationInProgress: WritableSignal<boolean> = signal(false);
-  readonly #username: WritableSignal<string | null> = signal(null);
-  readonly #_isAuthenticated: WritableSignal<boolean> = signal(
-    this.#isAuthenticated(),
+  readonly #username: WritableSignal<UserInfo['username'] | null> =
+    signal(null);
+  readonly #isAuthenticated: WritableSignal<boolean> = signal(
+    this.#isTokenStored(),
   );
 
-  readonly state = {
+  readonly state: AuthServiceState = {
     isAuthenticationInProgress: this.#isAuthenticationInProgress.asReadonly(),
-    isAuthenticated: this.#_isAuthenticated.asReadonly(),
+    isAuthenticated: this.#isAuthenticated.asReadonly(),
     username: this.#username.asReadonly(),
     initials: computed(() => this.#username()?.slice(0, 2) ?? ''),
   };
 
   getMe(): Observable<UserInfo | null> {
-    const token = this.getToken();
-
-    if (!token) {
+    if (!this.#isTokenStored()) {
       this.#logout();
       return of(null);
     }
@@ -55,11 +57,10 @@ export class AuthService {
       .get<UserInfo>(`${this.#environment.apiUrl}/users/me`)
       .pipe(
         tap(({username}) => {
-          this.#_isAuthenticated.set(true);
           this.#username.set(username);
+          this.#isAuthenticated.set(true);
         }),
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 401) this.#_isAuthenticated.set(false);
+        catchError(() => {
           this.#logout();
           return throwError(() => new Error('Authentication failed'));
         }),
@@ -81,50 +82,39 @@ export class AuthService {
         switchMap((successfulAuth) =>
           this.getMe().pipe(
             map(() => successfulAuth),
-            catchError((error) => {
-              console.error(
-                'Failed to get user info after authentication',
-                error,
-              );
-              return of(successfulAuth);
-            }),
+            catchError(() => of(successfulAuth)),
           ),
         ),
         delay(500),
         finalize(() => this.#isAuthenticationInProgress.set(false)),
         catchError((error) => {
           console.error('Authentication failed', error);
-          this.#isAuthenticationInProgress.set(false);
           return throwError(() => new Error('Authentication failed'));
         }),
       );
   }
 
   getToken(): string | null {
-    return localStorage.getItem(LOCAL_STORAGE_TOKEN);
+    return localStorage.getItem(LOCAL_STORAGE_AUTH_TOKEN);
   }
 
   saveToken(token: string): void {
-    localStorage.setItem(LOCAL_STORAGE_TOKEN, token);
-    this.#_isAuthenticated.set(true);
+    localStorage.setItem(LOCAL_STORAGE_AUTH_TOKEN, token);
+    this.#isAuthenticated.set(true);
   }
 
-  logout(): void {
-    this.#logout();
-  }
-
-  #isAuthenticated(): boolean {
+  #isTokenStored(): boolean {
     return !!this.getToken();
   }
 
   #logout(): void {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_AUTH_TOKEN);
     this.#clearState();
   }
 
   #clearState(): void {
     this.#isAuthenticationInProgress.set(false);
-    this.#_isAuthenticated.set(false);
+    this.#isAuthenticated.set(false);
     this.#username.set(null);
   }
 }
