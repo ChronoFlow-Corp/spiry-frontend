@@ -5,9 +5,18 @@
   }
 
   .shared-account-menu {
-    position: absolute;
-    top: 1.75rem;
-    right: 1.75rem;
-    z-index: 1;
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .page-web__wrapper {
+    .shared-account-menu {
+      display: block;
+      position: absolute;
+      top: 1.75rem;
+      right: 1.75rem;
+      z-index: 1;
+    }
   }
 }
