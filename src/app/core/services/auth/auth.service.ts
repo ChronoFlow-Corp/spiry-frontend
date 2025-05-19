@@ -13,7 +13,6 @@ import {
   map,
   Observable,
   of,
-  retry,
   switchMap,
   tap,
   throwError,
@@ -55,7 +54,6 @@ export class AuthService {
     return this.#http
       .get<UserInfo>(`${this.#environment.apiUrl}/users/me`)
       .pipe(
-        retry(2),
         tap(({username}) => {
           this.#_isAuthenticated.set(true);
           this.#username.set(username);
