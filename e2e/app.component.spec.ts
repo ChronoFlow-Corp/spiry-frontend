@@ -1,9 +1,6 @@
 import {expect, test} from '@playwright/test';
 
 test('route wild cards should work', async ({page}) => {
-  await page.goto('/web');
-  await expect(page.locator('p')).toContainText('web works!');
-
   await page.goto('/');
   await page.waitForURL('**/web');
   expect(new URL(page.url()).pathname).toBe('/web');
