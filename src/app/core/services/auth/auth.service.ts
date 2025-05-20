@@ -33,18 +33,21 @@ export class AuthService {
 
   readonly GOOGLE_AUTH_URL = `${this.#environment.apiUrl}/connect/google`;
 
-  readonly #isAuthenticationInProgress: WritableSignal<boolean> = signal(false);
-  readonly #username: WritableSignal<UserInfo['username'] | null> =
+  readonly #$isAuthenticationInProgress: WritableSignal<boolean> =
+    signal(false);
+  readonly #$email: WritableSignal<UserInfo['email'] | null> = signal(null);
+  readonly #$username: WritableSignal<UserInfo['username'] | null> =
     signal(null);
-  readonly #isAuthenticated: WritableSignal<boolean> = signal(
+  readonly #$isAuthenticated: WritableSignal<boolean> = signal(
     this.#isTokenStored(),
   );
 
   readonly state: AuthServiceState = {
-    isAuthenticationInProgress: this.#isAuthenticationInProgress.asReadonly(),
-    isAuthenticated: this.#isAuthenticated.asReadonly(),
-    username: this.#username.asReadonly(),
-    initials: computed(() => this.#username()?.slice(0, 2) ?? ''),
+    isAuthenticationInProgress: this.#$isAuthenticationInProgress.asReadonly(),
+    isAuthenticated: this.#$isAuthenticated.asReadonly(),
+    username: this.#$username.asReadonly(),
+    email: this.#$email.asReadonly(),
+    initials: computed(() => this.#$username()?.slice(0, 2) ?? ''),
   };
 
   getMe(): Observable<UserInfo | null> {
@@ -56,9 +59,10 @@ export class AuthService {
     return this.#http
       .get<UserInfo>(`${this.#environment.apiUrl}/users/me`)
       .pipe(
-        tap(({username}) => {
-          this.#username.set(username);
-          this.#isAuthenticated.set(true);
+        tap(({username, email}) => {
+          this.#$username.set(username);
+          this.#$email.set(email);
+          this.#$isAuthenticated.set(true);
         }),
         catchError(() => {
           this.#logout();
@@ -71,7 +75,7 @@ export class AuthService {
     accessToken: string,
     provider = 'google',
   ): Observable<SuccessfulAuth> {
-    this.#isAuthenticationInProgress.set(true);
+    this.#$isAuthenticationInProgress.set(true);
 
     return this.#http
       .get<SuccessfulAuth>(
@@ -86,7 +90,7 @@ export class AuthService {
           ),
         ),
         delay(500),
-        finalize(() => this.#isAuthenticationInProgress.set(false)),
+        finalize(() => this.#$isAuthenticationInProgress.set(false)),
         catchError((error) => {
           console.error('Authentication failed', error);
           return throwError(() => new Error('Authentication failed'));
@@ -100,7 +104,7 @@ export class AuthService {
 
   saveToken(token: string): void {
     localStorage.setItem(LOCAL_STORAGE_AUTH_TOKEN, token);
-    this.#isAuthenticated.set(true);
+    this.#$isAuthenticated.set(true);
   }
 
   #isTokenStored(): boolean {
@@ -113,8 +117,8 @@ export class AuthService {
   }
 
   #clearState(): void {
-    this.#isAuthenticationInProgress.set(false);
-    this.#isAuthenticated.set(false);
-    this.#username.set(null);
+    this.#$isAuthenticationInProgress.set(false);
+    this.#$isAuthenticated.set(false);
+    this.#$username.set(null);
   }
 }

@@ -1,9 +1,12 @@
-<div [id]="testId + 'wrapper'" class="page-web__wrapper flex w-100 h-100">
-  <p [id]="testId + 'paragraph'">web works!</p>
+<div [id]="testId + '-' + 'wrapper'" class="page-web__wrapper flex w-100 h-100">
+  <p [id]="testId + '-' + 'paragraph'">web works!</p>
 
   @if ($isAuthenticationInProgress()) {
-    <div [id]="testId + 'global-loader'" class="shared-global-loader"></div>
+    <div
+      [id]="testId + '-' + 'global-loader'"
+      class="shared-global-loader"
+    ></div>
   }
 
-  <div [id]="testId + 'account-menu'" class="shared-account-menu"></div>
+  <div [id]="testId + '-' + 'account-menu'" class="shared-account-menu"></div>
 </div>

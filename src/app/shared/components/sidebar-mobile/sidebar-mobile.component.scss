@@ -1,0 +1,23 @@
+:host {
+  width: 100dvw;
+  height: 3.75rem;
+}
+
+.shared-sidebar-mobile__wrapper {
+  padding: 0.75rem 1rem;
+  background-color: var(--background-neutral-main);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  will-change: background-color;
+  transition-property: background-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+
+  &.menu-shown {
+    background-color: var(--background-neutral-gray);
+  }
+}

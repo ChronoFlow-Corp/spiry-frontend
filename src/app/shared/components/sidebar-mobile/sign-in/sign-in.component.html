@@ -1,0 +1,46 @@
+@let templateTestId = $testId();
+
+<div
+  class="shared-sidebar-mobile-sign-in__sign-in-button__wrapper f-center w-100"
+  [id]="templateTestId + '-' + 'wrapper'"
+>
+  <button
+    (click)="signIn()"
+    class="shared-sidebar-mobile-sign-in__sign-in-button f-center c-pointer w-100"
+    [id]="templateTestId + '-' + 'button'"
+  >
+    <div
+      class="shared-sidebar-mobile-sign-in__sign-in-button-icon-wrapper f-center"
+    >
+      <svg
+        fill="none"
+        height="20"
+        viewBox="0 0 20 20"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="10.4167"
+          cy="5.66668"
+          fill="var(--icon-neutral-primary-inverse)"
+          r="3.66668"
+        />
+        <ellipse
+          cx="10.4167"
+          cy="14.8334"
+          fill="var(--icon-neutral-primary-inverse)"
+          opacity="0.4"
+          rx="6.41669"
+          ry="3.66668"
+        />
+      </svg>
+    </div>
+
+    <p
+      class="shared-sidebar-mobile-sign-in__sign-in-button-text"
+      [id]="templateTestId + '-' + 'button-text'"
+    >
+      Sign In
+    </p>
+  </button>
+</div>

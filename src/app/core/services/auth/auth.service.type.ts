@@ -17,5 +17,6 @@ export interface AuthServiceState {
   readonly isAuthenticationInProgress: Signal<boolean>;
   readonly isAuthenticated: Signal<boolean>;
   readonly username: Signal<UserInfo['username'] | null>;
+  readonly email: Signal<UserInfo['email'] | null>;
   readonly initials: Signal<string>;
 }

@@ -1,0 +1,24 @@
+.shared-sidebar-mobile-menu__wrapper {
+  width: 100dvw;
+  height: 100dvh;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  background-color: var(--background-neutral-gray);
+
+  will-change: transform, opacity, top;
+  transition-property: transform, opacity, top;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+
+  transform: translateY(-100%);
+  opacity: 0;
+
+  &.open {
+    top: 3.75rem;
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
