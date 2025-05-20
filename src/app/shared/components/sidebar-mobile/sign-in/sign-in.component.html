@@ -1,9 +1,13 @@
+@let templateTestId = $testId();
+
 <div
   class="shared-sidebar-mobile-sign-in__sign-in-button__wrapper f-center w-100"
+  [id]="templateTestId + '-' + 'wrapper'"
 >
   <button
     (click)="signIn()"
     class="shared-sidebar-mobile-sign-in__sign-in-button f-center c-pointer w-100"
+    [id]="templateTestId + '-' + 'button'"
   >
     <div
       class="shared-sidebar-mobile-sign-in__sign-in-button-icon-wrapper f-center"
@@ -32,6 +36,11 @@
       </svg>
     </div>
 
-    <p class="shared-sidebar-mobile-sign-in__sign-in-button-text">Sign In</p>
+    <p
+      class="shared-sidebar-mobile-sign-in__sign-in-button-text"
+      [id]="templateTestId + '-' + 'button-text'"
+    >
+      Sign In
+    </p>
   </button>
 </div>

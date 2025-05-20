@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  InputSignal,
+} from '@angular/core';
 
 import {SidebarMobileStore} from '@store/sidebar-mobile/sidebar-mobile.store';
 import {SidebarMobileAccountInfoComponent} from '@components/sidebar-mobile/account-info/account-info.component';
@@ -19,6 +25,11 @@ import {SidebarMobileMenuTabsComponent} from '@components/sidebar-mobile/menu-ta
 })
 export class SidebarMobileMenuComponent {
   readonly #authService = inject(AuthService);
+
+  $testId: InputSignal<string> = input.required({
+    alias: 'testId',
+    transform: (v) => v + '-' + 'menu',
+  });
 
   protected readonly $isAuthenticated = this.#authService.state.isAuthenticated;
   protected readonly $isMenuShown =

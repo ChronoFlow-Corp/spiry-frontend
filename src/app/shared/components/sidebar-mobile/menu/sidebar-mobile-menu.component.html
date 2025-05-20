@@ -1,8 +1,17 @@
-<div [class.open]="$isMenuShown()" class="menu">
+@let templateTestId = $testId();
+
+<div
+  [class.open]="$isMenuShown()"
+  class="shared-sidebar-mobile-menu__wrapper"
+  [id]="templateTestId + '-' + 'wrapper'"
+>
   @if ($isAuthenticated()) {
-    <div class="shared-sidebar-mobile-account-info"></div>
+    <div
+      class="shared-sidebar-mobile-account-info"
+      [testId]="templateTestId"
+    ></div>
   } @else {
-    <div class="shared-sidebar-mobile-sign-in"></div>
+    <div class="shared-sidebar-mobile-sign-in" [testId]="templateTestId"></div>
   }
   <div class="shared-sidebar-mobile-menu-tabs"></div>
 </div>

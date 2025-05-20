@@ -39,10 +39,10 @@
     }
 
     .shared-sidebar-mobile-account-info__account-info-name-wrapper {
-      &-name {
+      &-username {
         color: var(--text-neutral-primary);
 
-        font-family: Inter;
+        font-family: var(--font-inter);
         font-size: 1rem;
         font-style: normal;
         font-weight: 400;
@@ -52,7 +52,7 @@
       &-email {
         color: var(--text-neutral-disabled);
 
-        font-family: Inter;
+        font-family: var(--font-inter);
         font-size: 0.875rem;
         font-style: normal;
         font-weight: 400;

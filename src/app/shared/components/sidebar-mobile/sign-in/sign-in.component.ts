@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  InputSignal,
+} from '@angular/core';
+
 import {AuthService} from '@service/auth/auth.service';
 
 @Component({
@@ -9,6 +16,11 @@ import {AuthService} from '@service/auth/auth.service';
 })
 export class SidebarMobileSignInComponent {
   readonly #authService = inject(AuthService);
+
+  $testId: InputSignal<string> = input.required({
+    alias: 'testId',
+    transform: (v) => v + '-' + 'sign-in',
+  });
 
   signIn(): void {
     location.href = this.#authService.GOOGLE_AUTH_URL;

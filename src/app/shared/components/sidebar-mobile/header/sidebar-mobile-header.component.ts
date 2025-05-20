@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  InputSignal,
+} from '@angular/core';
 import {RouterLink} from '@angular/router';
 
 import {SidebarMobileStore} from '@store/sidebar-mobile/sidebar-mobile.store';
@@ -12,6 +18,11 @@ import {SidebarMobileStore} from '@store/sidebar-mobile/sidebar-mobile.store';
 })
 export class SidebarMobileHeaderComponent {
   readonly #sidebarMobileStore = inject(SidebarMobileStore);
+
+  $testId: InputSignal<string> = input.required({
+    alias: 'testId',
+    transform: (v) => v + '-' + 'header',
+  });
 
   protected readonly $isMenuShown = this.#sidebarMobileStore.state.isMenuShown;
 

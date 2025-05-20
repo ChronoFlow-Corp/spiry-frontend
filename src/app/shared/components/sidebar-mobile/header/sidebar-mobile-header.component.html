@@ -1,23 +1,35 @@
-<div class="shared-sidebar-mobile__header f-ai-center f-jc-space-between">
+@let templateTestId = $testId();
+<div
+  class="shared-sidebar-mobile__header f-ai-center f-jc-space-between"
+  [id]="templateTestId"
+>
   <a
     class="shared-sidebar-mobile__header-logo f-ai-center"
     routerLink="/"
     (click)="closeMenu()"
+    [id]="templateTestId + '-' + 'logo'"
   >
     <img
       alt="logo"
       class="shared-sidebar-mobile__header-logo-icon"
       draggable="false"
       src="assets/icons/logo.png"
+      [id]="templateTestId + '-' + 'logo-icon'"
     />
 
-    <p class="shared-sidebar-mobile__header-logo-title">Spiry</p>
+    <p
+      class="shared-sidebar-mobile__header-logo-title"
+      [id]="templateTestId + '-' + 'logo-title'"
+    >
+      Spiry
+    </p>
   </a>
 
   <button
     (click)="toggleMenu()"
     [class.open]="$isMenuShown()"
     class="shared-sidebar-mobile__show-menu-toggle f-col f-center c-pointer"
+    [id]="templateTestId + '-' + 'menu-toggle'"
   >
     <span></span>
     <span></span>

@@ -19,6 +19,7 @@ import {SidebarMobileStore} from '@store/sidebar-mobile/sidebar-mobile.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarMobileComponent implements OnInit, OnDestroy {
+  protected readonly testId = 'shared-sidebar-mobile';
   protected readonly $isMenuShown =
     inject(SidebarMobileStore).state.isMenuShown;
 

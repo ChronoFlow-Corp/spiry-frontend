@@ -1,7 +1,8 @@
 <div
   [class.menu-shown]="$isMenuShown()"
   class="shared-sidebar-mobile__wrapper w-100"
+  [id]="testId + '-' + 'wrapper'"
 >
-  <div class="shared-sidebar-mobile-header"></div>
+  <div class="shared-sidebar-mobile-header" [testId]="testId"></div>
 </div>
-<div class="shared-sidebar-mobile-menu"></div>
+<div class="shared-sidebar-mobile-menu" [testId]="testId"></div>
