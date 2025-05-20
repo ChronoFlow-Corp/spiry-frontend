@@ -12,6 +12,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {LoaderComponent} from '@components/loader/loader.component';
 import {AuthService} from '@service/auth/auth.service';
 import {AccountMenuComponent} from '@components/account-menu/account-menu.component';
+import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
 
 @Component({
   selector: '.page-web',
@@ -21,7 +22,7 @@ import {AccountMenuComponent} from '@components/account-menu/account-menu.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WebComponent implements OnInit {
-  protected readonly testId = 'page-web-';
+  protected readonly testId = 'page-web';
 
   readonly #router = inject(Router);
   readonly #activatedRoute = inject(ActivatedRoute);
@@ -29,9 +30,14 @@ export class WebComponent implements OnInit {
   readonly #authService = inject(AuthService);
   readonly $isAuthenticationInProgress =
     this.#authService.state.isAuthenticationInProgress;
+  readonly #sidebarSwitcherService = inject(SidebarSwitcherService);
 
   ngOnInit(): void {
     this.#subscribeOnParamsEvents();
+    this.#sidebarSwitcherService
+      .responsiveSidebar()
+      .pipe(takeUntilDestroyed(this.#destroy))
+      .subscribe();
   }
 
   #handleProviderCallback(accessToken: string): void {

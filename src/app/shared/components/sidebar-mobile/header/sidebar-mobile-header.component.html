@@ -1,0 +1,21 @@
+<div class="shared-sidebar-mobile__header f-ai-center f-jc-space-between">
+  <a class="shared-sidebar-mobile__header-logo f-ai-center">
+    <img
+      alt="logo"
+      class="shared-sidebar-mobile__header-logo-icon"
+      draggable="false"
+      src="assets/icons/logo.png"
+    />
+
+    <p class="shared-sidebar-mobile__header-logo-title">Spiry</p>
+  </a>
+
+  <button
+    (click)="toggleMenu()"
+    [class.open]="$isMenuShown()"
+    class="shared-sidebar-mobile__show-menu-toggle f-col f-center c-pointer"
+  >
+    <span></span>
+    <span></span>
+  </button>
+</div>

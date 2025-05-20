@@ -12,3 +12,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+body {
+  padding-top: 3.75rem; // sidebar mobile height
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    padding-top: 0;
+  }
+}

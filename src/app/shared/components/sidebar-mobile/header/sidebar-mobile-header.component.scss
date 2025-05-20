@@ -1,0 +1,61 @@
+.shared-sidebar-mobile__header {
+  .shared-sidebar-mobile__header-logo,
+  .shared-sidebar-mobile__show-menu-toggle {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  &-logo {
+    gap: 0.5rem;
+
+    &-icon,
+    &-title {
+      user-select: none;
+    }
+
+    &-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    &-title {
+      font-family: var(--font-bricolage-grotesque);
+
+      color: var(--text-neutral-primary);
+      font-feature-settings:
+        'liga' off,
+        'clig' off;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 2.1rem;
+      letter-spacing: -0.105rem;
+    }
+  }
+
+  .shared-sidebar-mobile__show-menu-toggle {
+    background-color: transparent;
+    gap: 0.5rem;
+
+    span {
+      width: 1.5rem;
+      height: 0.125rem;
+      background-color: var(--icon-neutral-tertiary);
+      border-radius: 0.125rem;
+
+      will-change: transform;
+      transition-property: transform;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+    }
+
+    &.open {
+      span:first-child {
+        transform: translateY(0.3125rem) rotate(45deg); /* Сдвиг и поворот для верхней полоски */
+      }
+
+      span:last-child {
+        transform: translateY(-0.3125rem) rotate(-45deg); /* Сдвиг и поворот для нижней полоски */
+      }
+    }
+  }
+}

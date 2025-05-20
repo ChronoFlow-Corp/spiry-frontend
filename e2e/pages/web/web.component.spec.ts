@@ -27,4 +27,6 @@ test.describe('WebComponent', () => {
       'rgb(15, 15, 15)',
     );
   });
+
+  // TODO add tests for account menu only for desktop resolutions
 });
