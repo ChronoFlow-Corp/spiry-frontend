@@ -8,9 +8,9 @@ test.describe('WebComponent', () => {
 
   test('should show paragraph', async ({page}) => {
     await page.goto('/web');
-    await expect(page.locator('#page-web-paragraph')).toContainText(
-      'web works!',
-    );
+    const paragraphLocator = page.locator('#page-web-paragraph');
+    await expect(paragraphLocator).toContainText('web works!');
+    await expect(paragraphLocator).toBeVisible();
   });
 
   test('paragraph should change color on theme switch', async ({page}) => {
