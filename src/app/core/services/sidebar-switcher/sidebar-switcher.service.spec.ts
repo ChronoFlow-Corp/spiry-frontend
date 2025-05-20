@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SidebarSwitcherService } from './sidebar-switcher.service';
+import {SidebarSwitcherService} from './sidebar-switcher.service';
 
 describe('SidebarSwitcherService', () => {
   let service: SidebarSwitcherService;
