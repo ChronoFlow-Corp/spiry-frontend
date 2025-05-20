@@ -1,1 +1,8 @@
-<div [class.open]="$isMenuShown()" class="menu">menu</div>
+<div [class.open]="$isMenuShown()" class="menu">
+  @if ($isAuthenticated()) {
+    <div class="shared-sidebar-mobile-account-info"></div>
+  } @else {
+    <div class="shared-sidebar-mobile-sign-in"></div>
+  }
+  <div class="shared-sidebar-mobile-menu-tabs"></div>
+</div>

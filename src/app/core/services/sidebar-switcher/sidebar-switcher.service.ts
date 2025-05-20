@@ -9,9 +9,9 @@ import {
 import {debounceTime, fromEvent, Observable, tap} from 'rxjs';
 
 import {SidebarMobileComponent} from '@components/sidebar-mobile/sidebar-mobile.component';
+import {OverlayCustom} from '@service/overlay/overlay-custom';
 import {OverlayService} from '@service/overlay/overlay.service';
 import {SidebarMobileService} from '@service/sidebar-mobile/sidebar-mobile.service';
-import {OverlayCustom} from '@service/overlay/overlay-custom';
 import {SIDEBAR_MOBILE_OVERLAY_CONFIG} from '@service/sidebar-mobile/sidebar-mobile.service.type';
 
 @Injectable({providedIn: 'root'})

@@ -11,4 +11,5 @@ export class SidebarMobileStore {
   };
 
   toggleMenu = (): void => this.#isMenuShown.update((v) => !v);
+  closeMenu = (): void => this.#isMenuShown.set(false);
 }

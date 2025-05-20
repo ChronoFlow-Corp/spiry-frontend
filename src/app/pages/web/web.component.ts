@@ -13,6 +13,11 @@ import {LoaderComponent} from '@components/loader/loader.component';
 import {AuthService} from '@service/auth/auth.service';
 import {AccountMenuComponent} from '@components/account-menu/account-menu.component';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
+import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
+import {
+  AVAILABLE_TOOL_CATEGORIES,
+  ToolCategory,
+} from '@store/tool-category/tool-category.store.type';
 
 @Component({
   selector: '.page-web',
@@ -28,11 +33,14 @@ export class WebComponent implements OnInit {
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #destroy = inject(DestroyRef);
   readonly #authService = inject(AuthService);
-  readonly $isAuthenticationInProgress =
-    this.#authService.state.isAuthenticationInProgress;
   readonly #sidebarSwitcherService = inject(SidebarSwitcherService);
+  readonly #toolCategoryStore = inject(ToolCategoryStore);
+
+  protected readonly $isAuthenticationInProgress =
+    this.#authService.state.isAuthenticationInProgress;
 
   ngOnInit(): void {
+    this.#syncRouteToolCategoryWithStore();
     this.#subscribeOnParamsEvents();
     this.#sidebarSwitcherService
       .responsiveSidebar()
@@ -59,5 +67,37 @@ export class WebComponent implements OnInit {
         takeUntilDestroyed(this.#destroy),
       )
       .subscribe();
+  }
+
+  #syncRouteToolCategoryWithStore(): void {
+    const urlSegments: readonly string[] = this.#router.url.split('/');
+    let toolCategoryFromUrl: ToolCategory | null = null;
+    let toolNameFromUrl: string | null = null;
+
+    const toolCategoryIndex = urlSegments.indexOf('category');
+    if (
+      toolCategoryIndex !== -1 &&
+      urlSegments.length > toolCategoryIndex + 1
+    ) {
+      const potentialToolCategory = urlSegments[toolCategoryIndex + 1];
+      if (
+        potentialToolCategory &&
+        AVAILABLE_TOOL_CATEGORIES.includes(
+          potentialToolCategory as ToolCategory,
+        )
+      ) {
+        toolCategoryFromUrl = potentialToolCategory as ToolCategory;
+
+        if (urlSegments.length > toolCategoryIndex + 2) {
+          toolNameFromUrl = urlSegments[toolCategoryIndex + 2];
+        }
+      }
+    }
+
+    if (toolCategoryFromUrl !== this.#toolCategoryStore.state.currentCategory())
+      this.#toolCategoryStore.selectCategory(toolCategoryFromUrl);
+
+    if (toolNameFromUrl !== this.#toolCategoryStore.state.currentToolName())
+      this.#toolCategoryStore.selectTool(toolNameFromUrl);
   }
 }
