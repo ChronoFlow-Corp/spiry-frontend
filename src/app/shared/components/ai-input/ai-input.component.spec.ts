@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AiInputComponent } from './ai-input.component';
+import {AiInputComponent} from './ai-input.component';
 
 describe('AiInputComponent', () => {
   let component: AiInputComponent;
@@ -8,9 +8,8 @@ describe('AiInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AiInputComponent]
-    })
-    .compileComponents();
+      imports: [AiInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AiInputComponent);
     component = fixture.componentInstance;
