@@ -23,4 +23,13 @@
       color: var(--text-neutral-primary);
     }
   }
+
+  .shared-ai-input {
+    position: fixed;
+    bottom: 1.25rem;
+  }
+
+  &.show-chat {
+    padding: 1.25rem 1rem;
+  }
 }

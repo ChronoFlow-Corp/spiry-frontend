@@ -25,6 +25,9 @@ import {debounceTime, skip, tap} from 'rxjs';
 export class AiInputComponent {
   readonly #destroyRef = inject(DestroyRef);
 
+  readonly #MIN_HEIGHT_PX = 22;
+  readonly #MAX_HEIGHT_PX = 88;
+
   submit: OutputEmitterRef<string> = output();
 
   protected readonly inputEl: Signal<ElementRef | undefined> =
@@ -36,9 +39,6 @@ export class AiInputComponent {
     signal(false);
   protected readonly $showDictationTooltip: WritableSignal<boolean> =
     signal(false);
-
-  private readonly MIN_HEIGHT_PX = 22;
-  private readonly MAX_HEIGHT_PX = 88;
 
   constructor() {
     toObservable(this.$inputValue)
@@ -77,14 +77,14 @@ export class AiInputComponent {
     textareaElement.style.height = '0';
 
     if (!textareaElement.value.trim()) {
-      textareaElement.style.height = `${this.MIN_HEIGHT_PX}px`;
+      textareaElement.style.height = `${this.#MIN_HEIGHT_PX}px`;
       return;
     }
 
     const scrollHeight = textareaElement.scrollHeight;
     const newHeight = Math.max(
-      this.MIN_HEIGHT_PX,
-      Math.min(scrollHeight, this.MAX_HEIGHT_PX),
+      this.#MIN_HEIGHT_PX,
+      Math.min(scrollHeight, this.#MAX_HEIGHT_PX),
     );
     textareaElement.style.height = `${newHeight}px`;
   }

@@ -4,6 +4,7 @@ import {
   provideAppInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
+import {provideAnimations} from '@angular/platform-browser/animations';
 import {
   PreloadAllModules,
   provideRouter,
@@ -11,8 +12,8 @@ import {
   withPreloading,
 } from '@angular/router';
 
-import {routes} from './app.routes';
 import {APP_INITIALIZERS} from './app.config.model';
+import {routes} from './app.routes';
 
 import {environment} from '@environments/environment';
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideAppInitializer(APP_INITIALIZERS()),
+    provideAnimations(),
     {provide: ENVIRONMENT_TOKEN, useValue: environment},
   ],
 };

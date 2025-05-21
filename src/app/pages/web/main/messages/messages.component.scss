@@ -1,0 +1,41 @@
+:host {
+  width: 100%;
+}
+
+.page-web-main-messages__wrapper {
+  gap: 1.25rem;
+  padding-bottom: 8rem;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 89dvh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  .page-web-main-messages__message {
+    font-family: var(--font-inter);
+    line-height: 1.625rem;
+    max-width: 100%;
+    word-wrap: break-word;
+
+    &--user {
+      margin-left: auto;
+
+      border-radius: 0.75rem;
+      background-color: var(--background-neutral-primary);
+      padding: 0.375rem 0.75rem;
+      color: var(--text-neutral-primary);
+    }
+
+    &--ai {
+      margin-right: auto;
+    }
+  }
+}

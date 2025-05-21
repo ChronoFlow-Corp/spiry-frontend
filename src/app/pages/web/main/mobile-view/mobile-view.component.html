@@ -1,8 +1,17 @@
-<div class="page-web-main-mobile-view__wrapper f-ai-center f-col w-100 h-100">
-  <p class="page-web-main-mobile-view__title">
+@let templateShowMessages = $showMessages();
+<div
+  class="page-web-main-mobile-view__wrapper f-ai-center f-col w-100 h-100"
+  [class.show-chat]="templateShowMessages"
+>
+  <div class="page-web-main-messages" [messages]="$messages()"></div>
+
+  <p
+    class="page-web-main-mobile-view__title"
+    [@textFadeOut]="templateShowMessages ? 'hidden' : 'visible'"
+  >
     Welcome to Spiry <br />
     <span>What are we doing?</span>
   </p>
 
-  <div class="shared-ai-input mt-a"></div>
+  <div class="shared-ai-input mt-a" (submit)="sendMessage($event)"></div>
 </div>

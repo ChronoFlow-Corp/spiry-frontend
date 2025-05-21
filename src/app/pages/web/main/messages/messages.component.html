@@ -1,0 +1,23 @@
+@if ($messages().length) {
+  <div class="page-web-main-messages__wrapper w-100 f-col" #wrapper>
+    @for (message of $messages(); track message.timestamp; let first = $first) {
+      @if (first) {
+        <p
+          class="page-web-main-messages__message"
+          [ngClass]="'page-web-main-messages__message--' + message.role"
+          [@messageFadeIn]
+        >
+          {{ message.content }}
+        </p>
+      } @else {
+        <p
+          class="page-web-main-messages__message"
+          [ngClass]="'page-web-main-messages__message--' + message.role"
+          [@messageOpacity]
+        >
+          {{ message.content }}
+        </p>
+      }
+    }
+  </div>
+}
