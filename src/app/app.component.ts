@@ -7,6 +7,7 @@ import {AuthService} from '@service/auth/auth.service';
   selector: '.spiry-root',
   imports: [RouterOutlet],
   template: '<router-outlet />',
+  host: {class: 'h-100'},
 })
 export class AppComponent implements OnInit {
   readonly #authService = inject(AuthService);

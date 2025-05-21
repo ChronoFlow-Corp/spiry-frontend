@@ -6,27 +6,5 @@ test.describe('WebComponent', () => {
     expect(page.locator('#page-web-wrapper')).toBeTruthy();
   });
 
-  test('should show paragraph', async ({page}) => {
-    await page.goto('/web');
-    const paragraphLocator = page.locator('#page-web-paragraph');
-    await expect(paragraphLocator).toContainText('web works!');
-    await expect(paragraphLocator).toBeVisible();
-  });
-
-  test('paragraph should change color on theme switch', async ({page}) => {
-    await page.emulateMedia({colorScheme: 'dark'});
-    await page.goto('/web');
-    await expect(page.locator('#page-web-paragraph')).toHaveCSS(
-      'color',
-      'rgb(255, 255, 255)',
-    );
-
-    await page.emulateMedia({colorScheme: 'light'});
-    await expect(page.locator('#page-web-paragraph')).toHaveCSS(
-      'color',
-      'rgb(15, 15, 15)',
-    );
-  });
-
   // TODO add tests for account menu only for desktop resolutions
 });

@@ -18,10 +18,11 @@ import {
   AVAILABLE_TOOL_CATEGORIES,
   ToolCategory,
 } from '@store/tool-category/tool-category.store.type';
+import {PageWebMainComponent} from '@pages/web/main/main.component';
 
 @Component({
   selector: '.page-web',
-  imports: [LoaderComponent, AccountMenuComponent],
+  imports: [LoaderComponent, AccountMenuComponent, PageWebMainComponent],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
