@@ -21,3 +21,10 @@ export interface AIErrorMessage {
 }
 
 export type AIResponseMessage = AIChunkMessage | AIDoneMessage | AIErrorMessage;
+
+export enum ConnectionState {
+  CONNECTING,
+  CONNECTED,
+  DISCONNECTED,
+  ERROR,
+}

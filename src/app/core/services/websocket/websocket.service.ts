@@ -1,9 +1,12 @@
-import {inject, Injectable, OnDestroy} from '@angular/core';
+import {effect, inject, Injectable, OnDestroy} from '@angular/core';
 
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
+import {
+  AIResponseMessage,
+  ConnectionState,
+} from '@service/websocket/websocket.service.type';
 import {ChatStore} from '@store/chat/chat.store';
 import {WebSocketStore} from '@store/websocket/websocket.store';
-import {AIResponseMessage} from './websocket.service.type';
 
 @Injectable({providedIn: 'root'})
 export class WebSocketService implements OnDestroy {
@@ -12,9 +15,20 @@ export class WebSocketService implements OnDestroy {
   readonly #chatStore = inject(ChatStore);
 
   #ws?: WebSocket;
-  #reconnectTimeout?: ReturnType<typeof setTimeout>;
+  #reconnectTimeout?: number;
+  #reconnectAttempts = 0;
+  readonly #maxReconnectAttempts = 3;
+  readonly #reconnectDelay = 1000;
 
   readonly $connectionState = this.#websocketStore.state.connectionState;
+
+  constructor() {
+    effect(
+      () =>
+        this.$connectionState() === ConnectionState.ERROR &&
+        this.#handleConnectionFailure(),
+    );
+  }
 
   ngOnDestroy(): void {
     this.#disconnect();
@@ -29,6 +43,7 @@ export class WebSocketService implements OnDestroy {
       return;
     }
 
+    this.#reconnectAttempts = 0;
     this.#tryConnect();
   }
 
@@ -46,18 +61,22 @@ export class WebSocketService implements OnDestroy {
 
       this.#ws.onopen = () => {
         console.log('[WS] Connected');
-        this.#websocketStore.setConnectionState(WebSocket.OPEN);
+        this.#reconnectAttempts = 0;
+        this.#websocketStore.setConnectionState(ConnectionState.CONNECTED);
       };
 
       this.#ws.onerror = (err) => {
         console.error('[WS] Error:', err);
-        this.#websocketStore.setConnectionState(WebSocket.CLOSED);
-        this.#scheduleReconnect();
+        this.#websocketStore.setConnectionState(ConnectionState.ERROR);
       };
 
       this.#ws.onclose = (event) => {
         console.log('[WS] Connection closed', event);
-        this.#websocketStore.setConnectionState(WebSocket.CLOSED);
+        this.#websocketStore.setConnectionState(ConnectionState.DISCONNECTED);
+
+        if (!event.wasClean) {
+          this.#websocketStore.setConnectionState(ConnectionState.ERROR);
+        }
       };
 
       let currentAiResponse = '';
@@ -83,13 +102,11 @@ export class WebSocketService implements OnDestroy {
       };
     } catch (error) {
       console.error('[WS] Failed to create WebSocket connection:', error);
-      this.#websocketStore.setConnectionState(WebSocket.CLOSED);
+      this.#websocketStore.setConnectionState(ConnectionState.ERROR);
     }
   }
 
   #replaceTempAIMessage(content: string): void {
-    console.log('replaceTempAIMessage', content);
-
     this.#chatStore.updateLastAIMessage(content);
   }
 
@@ -106,22 +123,37 @@ export class WebSocketService implements OnDestroy {
       this.#ws = undefined;
     }
 
-    this.#websocketStore.setConnectionState(WebSocket.CLOSED);
-  }
-
-  #scheduleReconnect(): void {
-    if (this.#reconnectTimeout) return;
-
-    this.#reconnectTimeout = setTimeout(() => {
+    if (this.#reconnectTimeout) {
+      window.clearTimeout(this.#reconnectTimeout);
       this.#reconnectTimeout = undefined;
-      this.connect();
-    }, 3000);
+    }
+
+    this.#websocketStore.setConnectionState(ConnectionState.DISCONNECTED);
   }
 
   #clearReconnect(): void {
     if (this.#reconnectTimeout) {
       clearTimeout(this.#reconnectTimeout);
       this.#reconnectTimeout = undefined;
+    }
+  }
+
+  #handleConnectionFailure(): void {
+    if (this.#reconnectAttempts < this.#maxReconnectAttempts) {
+      this.#reconnectAttempts++;
+      console.log(
+        `[WS] Attempting to reconnect (${this.#reconnectAttempts}/${this.#maxReconnectAttempts})...`,
+      );
+
+      this.#clearReconnect();
+      this.#reconnectTimeout = window.setTimeout(
+        () => this.#tryConnect(),
+        this.#reconnectDelay * this.#reconnectAttempts,
+      );
+    } else {
+      console.error('[WS] Max reconnect attempts reached, giving up.');
+      this.#chatStore.updateIsMessageStreaming(false);
+      this.#reconnectAttempts = 0;
     }
   }
 }
