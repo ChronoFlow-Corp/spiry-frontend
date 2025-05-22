@@ -4,6 +4,8 @@ import {
   DestroyRef,
   ElementRef,
   inject,
+  input,
+  InputSignal,
   output,
   OutputEmitterRef,
   Signal,
@@ -27,6 +29,10 @@ export class AiInputComponent {
 
   readonly #MIN_HEIGHT_PX = 22;
   readonly #MAX_HEIGHT_PX = 88;
+
+  readonly $disableSubmitButton: InputSignal<boolean> = input(false, {
+    alias: 'disableSubmitButton',
+  });
 
   submit: OutputEmitterRef<string> = output();
 

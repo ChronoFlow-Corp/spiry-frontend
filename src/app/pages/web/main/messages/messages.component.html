@@ -1,6 +1,6 @@
 @if ($messages().length) {
   <div class="page-web-main-messages__wrapper w-100 f-col" #wrapper>
-    @for (message of $messages(); track message.timestamp; let first = $first) {
+    @for (message of $messages(); track $index; let first = $first) {
       @if (first) {
         <p
           class="page-web-main-messages__message"
@@ -15,7 +15,11 @@
           [ngClass]="'page-web-main-messages__message--' + message.role"
           [@messageOpacity]
         >
-          {{ message.content }}
+          @if (message.role === 'ai' && !message.content) {
+            <div class="page-web-main-messages__message--loader"></div>
+          } @else {
+            {{ message.content }}
+          }
         </p>
       }
     }

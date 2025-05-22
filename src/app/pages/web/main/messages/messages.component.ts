@@ -14,7 +14,7 @@ import {
   MESSAGE_FADE_IN_ANIMATION,
   MESSAGE_OPACITY_ANIMATION,
 } from '@pages/web/main/messages/messages.component.animation';
-import {Message} from '@pages/web/main/messages/messages.component.type';
+import {Message} from '@store/chat/chat.store.type';
 
 @Component({
   selector: '.page-web-main-messages',

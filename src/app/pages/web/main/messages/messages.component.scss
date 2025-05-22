@@ -36,6 +36,18 @@
 
     &--ai {
       margin-right: auto;
+
+      .page-web-main-messages__message--loader {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: var(--background-neutral-primary-inverse);
+
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        animation-name: blink;
+      }
     }
   }
 }

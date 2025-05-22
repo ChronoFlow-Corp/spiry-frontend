@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({scrollPositionRestoration: 'top'}),
     ),
     provideHttpClient(withInterceptors([tokenInterceptor])),
-    provideAppInitializer(APP_INITIALIZERS()),
+    provideAppInitializer(APP_INITIALIZERS),
     provideAnimations(),
     {provide: ENVIRONMENT_TOKEN, useValue: environment},
   ],

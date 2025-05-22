@@ -82,7 +82,7 @@
       >
         <button
           class="f-center w-100 h-100"
-          [disabled]="!templateInputValue"
+          [disabled]="!templateInputValue || $disableSubmitButton()"
           (click)="submitMessage()"
         >
           <svg
