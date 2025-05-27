@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SidebarDesktopComponent } from './sidebar-desktop.component';
+import {SidebarDesktopComponent} from './sidebar-desktop.component';
 
 describe('SidebarDesktopComponent', () => {
   let component: SidebarDesktopComponent;
@@ -8,9 +8,8 @@ describe('SidebarDesktopComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SidebarDesktopComponent]
-    })
-    .compileComponents();
+      imports: [SidebarDesktopComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarDesktopComponent);
     component = fixture.componentInstance;

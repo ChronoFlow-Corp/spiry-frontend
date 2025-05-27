@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DefaultViewComponent } from './default-view.component';
+import {DefaultViewComponent} from './default-view.component';
 
 describe('DefaultViewComponent', () => {
   let component: DefaultViewComponent;
@@ -8,9 +8,8 @@ describe('DefaultViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DefaultViewComponent]
-    })
-    .compileComponents();
+      imports: [DefaultViewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DefaultViewComponent);
     component = fixture.componentInstance;

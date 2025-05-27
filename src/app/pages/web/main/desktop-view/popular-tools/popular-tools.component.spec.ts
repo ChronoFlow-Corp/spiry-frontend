@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PopularToolsComponent } from './popular-tools.component';
+import {PopularToolsComponent} from './popular-tools.component';
 
 describe('PopularToolsComponent', () => {
   let component: PopularToolsComponent;
@@ -8,9 +8,8 @@ describe('PopularToolsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PopularToolsComponent]
-    })
-    .compileComponents();
+      imports: [PopularToolsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PopularToolsComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DesktopViewComponent } from './desktop-view.component';
+import {DesktopViewComponent} from './desktop-view.component';
 
 describe('DesktopViewComponent', () => {
   let component: DesktopViewComponent;
@@ -8,9 +8,8 @@ describe('DesktopViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DesktopViewComponent]
-    })
-    .compileComponents();
+      imports: [DesktopViewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DesktopViewComponent);
     component = fixture.componentInstance;
