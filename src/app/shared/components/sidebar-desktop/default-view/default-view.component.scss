@@ -1,0 +1,103 @@
+:host {
+  height: 100%;
+}
+
+.shared-sidebar-desktop-default-view__wrapper {
+  height: 100%;
+  gap: 1rem;
+  padding: 0.75rem;
+
+  .shared-sidebar-desktop-default-view__header {
+    padding: 0.25rem 0 0.25rem 0.5rem;
+
+    &-logo {
+      gap: 0.5rem;
+      text-decoration: none;
+
+      img {
+        width: 2.25rem;
+        height: 2.25rem;
+      }
+    }
+
+    &-title {
+      color: var(--text-neutral-primary);
+      font-feature-settings:
+        'liga' off,
+        'clig' off;
+      font-family: 'Bricolage Grotesque';
+      font-size: 1.2625rem;
+      font-weight: 700;
+      line-height: 1.7675rem;
+      letter-spacing: -0.088375rem;
+    }
+
+    .shared-sidebar-desktop-default-view__header-collapse-toggle {
+      border: none;
+      background-color: transparent;
+    }
+  }
+
+  .shared-sidebar-desktop-default-view__tabs {
+    gap: 0.25rem;
+
+    .shared-sidebar-desktop-default-view__tab {
+      gap: 0.5rem;
+      padding: 0.5rem;
+
+      white-space: nowrap;
+
+      border-radius: 0.75rem;
+
+      will-change: background-color;
+      transition-property: background-color;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+
+      &-title {
+        color: var(--text-neutral-tertiary);
+        font-family: Inter;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        letter-spacing: -0.0175rem;
+      }
+
+      &.active {
+        background-color: var(--background-neutral-main);
+
+        .shared-sidebar-desktop-default-view__tab-icon {
+          svg path {
+            will-change: fill;
+            transition-property: fill;
+            transition-duration: 200ms;
+            transition-timing-function: ease-out;
+          }
+
+          svg {
+            path {
+              fill: var(--icon-colored-brand);
+            }
+
+            path:nth-child(1) {
+              fill: var(--icon-neutral-primary);
+            }
+          }
+
+          &.shared-sidebar-desktop-default-view__tab-icon-visual-creation
+            svg
+            path:not(:nth-child(1)) {
+            fill: #f9600e;
+          }
+
+          &.shared-sidebar-desktop-default-view__tab-icon-automation
+            svg
+            path:not(:nth-child(1)) {
+            fill: #7842eb;
+          }
+        }
+      }
+    }
+  }
+}

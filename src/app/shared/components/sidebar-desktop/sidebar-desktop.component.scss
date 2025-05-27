@@ -1,0 +1,31 @@
+@use 'components/sidebar-desktop' as sidebarDesktop;
+
+:host {
+  height: sidebarDesktop.$height;
+
+  will-change: sidebarDesktop.$collapse-will-change;
+  transition-property: sidebarDesktop.$collapse-transition-property;
+  transition-duration: sidebarDesktop.$collapse-transition-duration;
+  transition-timing-function: sidebarDesktop.$collapse-transition-timing-function;
+
+  background-color: var(--background-neutral-gray);
+
+  &.default-view {
+    width: sidebarDesktop.$default-width;
+  }
+
+  &.text-content-config {
+    width: sidebarDesktop.$text-content-config-width;
+  }
+
+  &.collapsed {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.shared-sidebar-desktop__wrapper {
+  height: 100%;
+  width: 100%;
+}

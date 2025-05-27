@@ -1,0 +1,134 @@
+<div class="shared-sidebar-desktop-default-view__wrapper f-col">
+  <div
+    class="shared-sidebar-desktop-default-view__header flex f-ai-center w-100"
+  >
+    <a
+      class="shared-sidebar-desktop-default-view__header-logo f-center c-pointer"
+      (click)="goHome()"
+    >
+      <img src="assets/icons/logo.png" alt="spiry logo" draggable="false" />
+
+      <p class="shared-sidebar-desktop-default-view__header-title fw-700">
+        Spiry
+      </p>
+    </a>
+
+    <button
+      class="shared-sidebar-desktop-default-view__header-collapse-toggle f-center ml-a c-pointer"
+      type="button"
+      (click)="sidebarDesktopStore.toggleIsCollapsed()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15.9167 8.00002C15.9167 8.41423 15.581 8.75002 15.1667 8.75002L5.9347 8.75002L9.07625 12.5199C9.34142 12.8381 9.29843 13.311 8.98022 13.5762C8.66201 13.8414 8.18909 13.7984 7.92391 13.4802L3.75725 8.48016C3.52548 8.20202 3.52548 7.79801 3.75725 7.51988L7.92391 2.51988C8.18909 2.20167 8.66201 2.15868 8.98022 2.42385C9.29843 2.68902 9.34142 3.16195 9.07625 3.48016L5.9347 7.25002L15.1667 7.25002C15.581 7.25002 15.9167 7.5858 15.9167 8.00002ZM1.00008 2.25002C1.41429 2.25002 1.75008 2.58581 1.75008 3.00002L1.75008 13C1.75008 13.4142 1.41429 13.75 1.00008 13.75C0.585866 13.75 0.250081 13.4142 0.250081 13L0.250081 3.00002C0.250081 2.58581 0.585867 2.25002 1.00008 2.25002Z"
+          fill="var(--icon-neutral-disabled)"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div class="shared-sidebar-desktop-default-view__tabs f-col w-100 h-100">
+    <a
+      class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
+      routerLink="/web/category/text-content"
+      routerLinkActive="active"
+    >
+      <div class="shared-sidebar-desktop-default-view__tab-icon f-ai-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M16.8 21.3H15C14.502 21.3 14.1 20.898 14.1 20.4C14.1 19.902 14.502 19.5 15 19.5H16.8C18.288 19.5 19.5 18.288 19.5 16.8V15C19.5 14.502 19.902 14.1 20.4 14.1C20.898 14.1 21.3 14.502 21.3 15V16.8C21.3 19.284 19.284 21.3 16.8 21.3ZM8.99995 21.3H7.19995C4.71595 21.3 2.69995 19.284 2.69995 16.8V15C2.69995 14.502 3.10195 14.1 3.59995 14.1C4.09795 14.1 4.49995 14.502 4.49995 15V16.8C4.49995 18.288 5.71195 19.5 7.19995 19.5H8.99995C9.49795 19.5 9.89995 19.902 9.89995 20.4C9.89995 20.898 9.49795 21.3 8.99995 21.3ZM20.4 9.90001C19.902 9.90001 19.5 9.49801 19.5 9.00001V7.20001C19.5 5.71201 18.288 4.50001 16.8 4.50001H15C14.502 4.50001 14.1 4.09801 14.1 3.60001C14.1 3.10201 14.502 2.70001 15 2.70001H16.8C19.284 2.70001 21.3 4.71601 21.3 7.20001V9.00001C21.3 9.49801 20.898 9.90001 20.4 9.90001ZM3.59995 9.90001C3.10195 9.90001 2.69995 9.49801 2.69995 9.00001V7.20001C2.69995 4.71601 4.71595 2.70001 7.19995 2.70001H8.99995C9.49795 2.70001 9.89995 3.10201 9.89995 3.60001C9.89995 4.09801 9.49795 4.50001 8.99995 4.50001H7.19995C5.71195 4.50001 4.49995 5.71201 4.49995 7.20001V9.00001C4.49995 9.49801 4.09795 9.90001 3.59995 9.90001Z"
+            fill="var(--icon-neutral-tertiary)"
+          />
+          <path
+            d="M8.09995 8.39998H15.9C16.398 8.39998 16.8 7.99798 16.8 7.49998C16.8 7.00198 16.398 6.59998 15.9 6.59998H8.09995C7.60195 6.59998 7.19995 7.00198 7.19995 7.49998C7.19995 7.99798 7.60195 8.39998 8.09995 8.39998Z"
+            fill="var(--icon-neutral-disabled)"
+          />
+          <path
+            d="M15.9 11.1H8.09995C7.60195 11.1 7.19995 11.502 7.19995 12C7.19995 12.498 7.60195 12.9 8.09995 12.9H15.9C16.398 12.9 16.8 12.498 16.8 12C16.8 11.502 16.398 11.1 15.9 11.1Z"
+            fill="var(--icon-neutral-disabled)"
+          />
+          <path
+            d="M13.5 15.6H8.09995C7.60195 15.6 7.19995 16.002 7.19995 16.5C7.19995 16.998 7.60195 17.4 8.09995 17.4H13.5C13.998 17.4 14.4 16.998 14.4 16.5C14.4 16.002 13.998 15.6 13.5 15.6Z"
+            fill="var(--icon-neutral-disabled)"
+          />
+        </svg>
+      </div>
+
+      <p class="shared-sidebar-desktop-default-view__tab-title">Text Content</p>
+    </a>
+
+    <a
+      class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
+      routerLink="/web/category/visual-creation"
+      routerLinkActive="active"
+    >
+      <div
+        class="shared-sidebar-desktop-default-view__tab-icon shared-sidebar-desktop-default-view__tab-icon-visual-creation f-ai-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M13.5 14.43V14.4C13.5 12.582 12.018 11.1 10.2 11.1H7.80005C6.31205 11.1 5.10005 9.88798 5.10005 8.39998V5.99998C5.10005 5.50198 4.69805 5.09998 4.20005 5.09998C3.70205 5.09998 3.30005 5.50198 3.30005 5.99998V8.39998C3.30005 10.884 5.31605 12.9 7.80005 12.9H10.2C11.028 12.9 11.7 13.572 11.7 14.4V14.43C10.848 14.574 10.2 15.306 10.2 16.2V19.8C10.2 20.796 11.004 21.6 12 21.6H13.2C14.196 21.6 15 20.796 15 19.8V16.2C15 15.306 14.352 14.574 13.5 14.43Z"
+            fill="var(--icon-neutral-tertiary)"
+          />
+          <path
+            d="M8.4001 9.59999C7.4041 9.59999 6.6001 8.79599 6.6001 7.79999V6.59999C6.6001 5.60399 7.4041 4.79999 8.4001 4.79999H18.0001C18.9961 4.79999 19.8001 5.60399 19.8001 6.59999V7.79999C19.8001 8.79599 18.9961 9.59999 18.0001 9.59999H8.4001Z"
+            fill="var(--icon-neutral-disabled)"
+          />
+        </svg>
+      </div>
+
+      <p class="shared-sidebar-desktop-default-view__tab-title">
+        Visual Creation
+      </p>
+    </a>
+
+    <a
+      class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
+      routerLink="/web/category/automation"
+      routerLinkActive="active"
+    >
+      <div
+        class="shared-sidebar-desktop-default-view__tab-icon shared-sidebar-desktop-default-view__tab-icon-automation f-ai-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M6.03612 14.118C6.22812 13.596 6.96612 13.596 7.16412 14.118L7.80012 15.84C7.86012 16.002 7.99212 16.134 8.15412 16.194L9.87612 16.83C10.3981 17.022 10.3981 17.76 9.87612 17.958L8.15412 18.594C7.99212 18.654 7.86012 18.786 7.80012 18.948L7.16412 20.67C6.97212 21.192 6.23412 21.192 6.03612 20.67L5.40012 18.948C5.34012 18.786 5.20812 18.654 5.04612 18.594L3.32412 17.958C2.80212 17.766 2.80212 17.028 3.32412 16.83L5.04612 16.194C5.20812 16.134 5.34012 16.002 5.40012 15.84L6.03612 14.118Z"
+            fill="var(--icon-neutral-disabled)"
+          />
+          <path
+            d="M12.954 4.07998C13.242 3.29398 14.352 3.29398 14.64 4.07998L15.924 7.54198C16.014 7.78798 16.212 7.97998 16.458 8.07598L19.92 9.35998C20.706 9.64798 20.706 10.758 19.92 11.046L16.458 12.33C16.212 12.42 16.02 12.618 15.924 12.864L14.64 16.326C14.352 17.112 13.242 17.112 12.954 16.326L11.67 12.864C11.58 12.618 11.382 12.426 11.136 12.33L7.67397 11.046C6.88797 10.758 6.88797 9.64798 7.67397 9.35998L11.136 8.07598C11.382 7.98598 11.574 7.78798 11.67 7.54198L12.954 4.07998Z"
+            fill="var(--icon-neutral-tertiary)"
+          />
+        </svg>
+      </div>
+
+      <p class="shared-sidebar-desktop-default-view__tab-title">Automation</p>
+    </a>
+  </div>
+</div>
