@@ -4,7 +4,8 @@
 }
 
 .page-web-main-desktop-view__wrapper {
-  padding-top: 10rem;
+  padding: 10rem 0;
+  overflow-y: scroll;
 
   .page-web-main-desktop-view__title {
     color: var(--text-neutral-disabled);
@@ -18,5 +19,13 @@
     span {
       color: var(--text-neutral-primary);
     }
+  }
+
+  .shared-ai-input {
+    margin-top: 1.75rem;
+  }
+
+  .page-web-main-desktop-view-popular-tools {
+    margin-top: 2.25rem;
   }
 }

@@ -1,0 +1,24 @@
+:host {
+  width: 100%;
+}
+
+.divider-with-text__wrapper {
+  gap: 1.25rem;
+
+  .divider-with-text__line {
+    height: 0.0625rem;
+    background-color: var(--stroke-neutral-disabled);
+    border: none;
+  }
+
+  .divider-with-text__text {
+    color: var(--text-neutral-disabled);
+    text-align: center;
+    font-family: var(--font-bricolage-grotesque);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    letter-spacing: -0.0375rem;
+    white-space: nowrap;
+  }
+}

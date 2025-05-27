@@ -15,7 +15,7 @@ import {RouterLink} from '@angular/router';
 })
 export class ToolCardComponent {
   $showHeader: InputSignal<boolean> = input(true, {alias: 'showHeader'});
-  $headerText: InputSignal<string> = input('', {alias: 'headerText  '});
+  $headerText: InputSignal<string> = input('', {alias: 'headerText'});
   $title: InputSignal<string> = input.required({alias: 'title'});
   $routerLink: InputSignal<string> = input.required({alias: 'rLink'});
 }

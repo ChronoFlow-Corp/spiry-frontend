@@ -1,5 +1,8 @@
 @if ($messages().length) {
-  <div class="page-web-main-messages__wrapper w-100 f-col" #wrapper>
+  <div
+    class="page-web-main-messages__wrapper w-100 f-col no-scrollbar"
+    #wrapper
+  >
     @for (message of $messages(); track $index; let first = $first) {
       @if (first) {
         <p
