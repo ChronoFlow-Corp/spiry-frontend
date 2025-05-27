@@ -6,6 +6,7 @@
 .page-web-main-desktop-view__wrapper {
   padding: 10rem 0;
   overflow-y: scroll;
+  position: relative;
 
   .page-web-main-desktop-view__title {
     color: var(--text-neutral-disabled);
@@ -30,6 +31,12 @@
   }
 
   &.show-chat {
-    padding: 4.5rem 0;
+    padding: 4.5rem 2rem;
+
+    .shared-ai-input {
+      position: fixed;
+      bottom: 2rem;
+      margin-top: 0;
+    }
   }
 }

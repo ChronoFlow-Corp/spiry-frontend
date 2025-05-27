@@ -5,6 +5,12 @@
 >
   @if (templateShowMessages) {
     <div class="page-web-main-messages" [messages]="$messages()"></div>
+
+    <div
+      class="shared-ai-input"
+      (submit)="sendMessage($event)"
+      [disableSubmitButton]="$isMessageStreaming()"
+    ></div>
   } @else {
     <p class="page-web-main-desktop-view__title">
       Welcome to Spiry <br />

@@ -4,18 +4,7 @@ import {Message} from '@store/chat/chat.store.type';
 
 @Injectable({providedIn: 'root'})
 export class ChatStore {
-  readonly #$messages: WritableSignal<Message[]> = signal([
-    {
-      role: 'user',
-      content: 'Hello, how can I help you today?',
-      timestamp: Date.now(),
-    },
-    {
-      role: 'ai',
-      content: 'Hello, how can I help you today?',
-      timestamp: Date.now(),
-    },
-  ]);
+  readonly #$messages: WritableSignal<Message[]> = signal([]);
   readonly #$isMessageStreaming: WritableSignal<boolean> = signal(false);
 
   readonly state = {
