@@ -1,1 +1,1 @@
-export type IconName = 'global-loader';
+export type IconName = 'global-loader' | 'logo';

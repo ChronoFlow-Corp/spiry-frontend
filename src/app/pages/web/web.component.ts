@@ -11,6 +11,7 @@ import {finalize, tap} from 'rxjs';
 
 import {AccountMenuComponent} from '@components/account-menu/account-menu.component';
 import {LoaderComponent} from '@components/loader/loader.component';
+import {SidebarDesktopComponent} from '@components/sidebar-desktop/sidebar-desktop.component';
 import {PageWebMainComponent} from '@pages/web/main/main.component';
 import {AuthService} from '@service/auth/auth.service';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
@@ -23,11 +24,17 @@ import {
 
 @Component({
   selector: '.page-web',
-  imports: [LoaderComponent, AccountMenuComponent, PageWebMainComponent],
+  imports: [
+    LoaderComponent,
+    AccountMenuComponent,
+    PageWebMainComponent,
+    SidebarDesktopComponent,
+  ],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    '[class.flex]': 'true',
     '[class.sidebar-desktop-collapsed]': '$isSidebarDesktopCollapsed()',
   },
 })
