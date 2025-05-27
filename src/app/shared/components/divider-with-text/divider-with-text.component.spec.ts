@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DividerWithTextComponent } from './divider-with-text.component';
+import {DividerWithTextComponent} from './divider-with-text.component';
 
 describe('DividerWithTextComponent', () => {
   let component: DividerWithTextComponent;
@@ -8,9 +8,8 @@ describe('DividerWithTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DividerWithTextComponent]
-    })
-    .compileComponents();
+      imports: [DividerWithTextComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DividerWithTextComponent);
     component = fixture.componentInstance;

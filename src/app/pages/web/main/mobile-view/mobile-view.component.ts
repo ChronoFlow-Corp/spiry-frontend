@@ -24,7 +24,7 @@ export class PageWebMainMobileViewComponent {
   readonly #chatStore = inject(ChatStore);
   readonly #webSocketService = inject(WebSocketService);
 
-  protected readonly $showMessages: WritableSignal<boolean> = signal(false);
+  protected readonly $showMessages: WritableSignal<boolean> = signal(true);
   protected readonly $messages = this.#chatStore.state.messages;
   protected readonly $isMessageStreaming =
     this.#chatStore.state.isMessageStreaming;
