@@ -3,7 +3,11 @@ import {effect, inject, Injectable, OnDestroy} from '@angular/core';
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
 import {
   AIResponseMessage,
+  ConnectionEstablishedMessage,
   ConnectionState,
+  ConnectionType,
+  WebSocketErrorMessage,
+  WebSocketMessage,
 } from '@service/websocket/websocket.service.type';
 import {ChatStore} from '@store/chat/chat.store';
 import {WebSocketStore} from '@store/websocket/websocket.store';
@@ -21,6 +25,8 @@ export class WebSocketService implements OnDestroy {
   readonly #reconnectDelay = 1000;
 
   readonly $connectionState = this.#websocketStore.state.connectionState;
+  readonly $connectionType = this.#websocketStore.state.connectionType;
+  readonly $lastError = this.#websocketStore.state.lastError;
 
   constructor() {
     effect(
@@ -47,35 +53,70 @@ export class WebSocketService implements OnDestroy {
     this.#tryConnect();
   }
 
-  send(data: unknown): void {
-    if (this.$connectionState() === WebSocket.OPEN) {
-      this.#ws!.send(JSON.stringify(data));
+  setConnectionType(type: ConnectionType): void {
+    if (this.$connectionState() !== ConnectionState.CONNECTED) {
+      console.error('[WS] Cannot set connection type: not connected');
+      return;
+    }
+
+    this.#send({
+      type: 'connection-type',
+      data: type,
+    });
+  }
+
+  sendMessage(data: unknown): void {
+    if (this.$connectionState() !== ConnectionState.CONNECTION_TYPE_SET) {
+      console.error('[WS] Cannot send message: connection type not set');
+      return;
+    }
+
+    this.#send(data);
+  }
+
+  sendRawMessage(data: unknown): void {
+    if (this.$connectionState() === ConnectionState.DISCONNECTED) {
+      console.error('[WS] Cannot send message: not connected');
+      return;
+    }
+
+    this.#send(data);
+  }
+
+  #send(data: unknown): void {
+    if (this.#ws?.readyState === WebSocket.OPEN) {
+      this.#ws.send(JSON.stringify(data));
     } else {
-      console.error('[WS] Tried to send while disconnected');
+      console.error('[WS] Tried to send while not connected');
     }
   }
 
   #tryConnect(): void {
     try {
+      this.#websocketStore.setConnectionState(ConnectionState.CONNECTING);
       this.#ws = new WebSocket(this.#environment.wsUrl);
 
       this.#ws.onopen = () => {
         console.log('[WS] Connected');
         this.#reconnectAttempts = 0;
         this.#websocketStore.setConnectionState(ConnectionState.CONNECTED);
+        this.#websocketStore.setLastError(null);
       };
 
       this.#ws.onerror = (err) => {
         console.error('[WS] Error:', err);
         this.#websocketStore.setConnectionState(ConnectionState.ERROR);
+        this.#websocketStore.setLastError('WebSocket connection error');
       };
 
       this.#ws.onclose = (event) => {
         console.log('[WS] Connection closed', event);
         this.#websocketStore.setConnectionState(ConnectionState.DISCONNECTED);
+        this.#websocketStore.setConnectionType(null);
 
         if (!event.wasClean) {
           this.#websocketStore.setConnectionState(ConnectionState.ERROR);
+          this.#websocketStore.setLastError('Connection closed unexpectedly');
         }
       };
 
@@ -84,26 +125,81 @@ export class WebSocketService implements OnDestroy {
       this.#ws.onmessage = (event) => {
         console.log('[WS] Message:', event);
 
-        const message: AIResponseMessage = JSON.parse(event.data);
-
-        if (message.type === 'chunk') {
-          this.#chatStore.updateIsMessageStreaming(true);
-          currentAiResponse += message.content;
-
-          this.#replaceTempAIMessage(currentAiResponse);
-        }
-
-        if (message.type === 'done') {
-          console.log(currentAiResponse);
-
-          this.#chatStore.updateIsMessageStreaming(false);
-          currentAiResponse = '';
+        try {
+          const message: WebSocketMessage = JSON.parse(event.data);
+          this.#handleMessage(message, currentAiResponse);
+        } catch (error) {
+          console.error('[WS] Failed to parse message:', error);
+          this.#websocketStore.setLastError('Failed to parse server message');
         }
       };
     } catch (error) {
       console.error('[WS] Failed to create WebSocket connection:', error);
       this.#websocketStore.setConnectionState(ConnectionState.ERROR);
+      this.#websocketStore.setLastError(
+        'Failed to create WebSocket connection',
+      );
     }
+  }
+
+  #handleMessage(message: WebSocketMessage, currentAiResponse: string): void {
+    switch (message.type) {
+      case 'connection-established':
+        this.#handleConnectionEstablished(
+          message as ConnectionEstablishedMessage,
+        );
+        break;
+      case 'error':
+        'data' in message
+          ? this.#handleError(message as WebSocketErrorMessage)
+          : this.#handleAIError(message as AIResponseMessage);
+        break;
+      case 'chunk':
+        this.#handleChunk(message as AIResponseMessage, currentAiResponse);
+        break;
+      case 'done':
+        this.#handleDone();
+        break;
+      default:
+        console.warn('[WS] Unknown message type:', message);
+    }
+  }
+
+  #handleConnectionEstablished(message: ConnectionEstablishedMessage): void {
+    console.log(
+      '[WS] Connection type established:',
+      message.data.connectionType,
+    );
+    this.#websocketStore.setConnectionState(
+      ConnectionState.CONNECTION_TYPE_SET,
+    );
+    this.#websocketStore.setConnectionType(message.data.connectionType);
+  }
+
+  #handleError(message: WebSocketErrorMessage): void {
+    console.error('[WS] Server error:', message.data.message);
+    this.#websocketStore.setLastError(message.data.message);
+  }
+
+  #handleAIError(message: AIResponseMessage): void {
+    if (message.type === 'error') {
+      console.error('[WS] AI error:', message.message);
+      this.#websocketStore.setLastError(message.message);
+      this.#chatStore.updateIsMessageStreaming(false);
+    }
+  }
+
+  #handleChunk(message: AIResponseMessage, currentAiResponse: string): void {
+    if (message.type === 'chunk') {
+      this.#chatStore.updateIsMessageStreaming(true);
+      currentAiResponse += message.content;
+      this.#replaceTempAIMessage(currentAiResponse);
+    }
+  }
+
+  #handleDone(): void {
+    console.log('[WS] AI response completed');
+    this.#chatStore.updateIsMessageStreaming(false);
   }
 
   #replaceTempAIMessage(content: string): void {
@@ -123,12 +219,8 @@ export class WebSocketService implements OnDestroy {
       this.#ws = undefined;
     }
 
-    if (this.#reconnectTimeout) {
-      window.clearTimeout(this.#reconnectTimeout);
-      this.#reconnectTimeout = undefined;
-    }
-
-    this.#websocketStore.setConnectionState(ConnectionState.DISCONNECTED);
+    this.#clearReconnect();
+    this.#websocketStore.reset();
   }
 
   #clearReconnect(): void {
@@ -154,6 +246,9 @@ export class WebSocketService implements OnDestroy {
       console.error('[WS] Max reconnect attempts reached, giving up.');
       this.#chatStore.updateIsMessageStreaming(false);
       this.#reconnectAttempts = 0;
+      this.#websocketStore.setLastError(
+        'Failed to reconnect after multiple attempts',
+      );
     }
   }
 }

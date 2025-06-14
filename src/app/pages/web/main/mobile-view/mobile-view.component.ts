@@ -38,7 +38,7 @@ export class PageWebMainMobileViewComponent {
       timestamp: Date.now(),
     });
 
-    this.#webSocketService.send({
+    this.#webSocketService.sendMessage({
       type: 'ai-chat',
       message,
     });
