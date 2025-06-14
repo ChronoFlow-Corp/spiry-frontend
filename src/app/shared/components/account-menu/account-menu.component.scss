@@ -1,7 +1,7 @@
 .shared-account-menu__wrapper {
   .shared-account-menu__avatar {
-    width: 2.625rem;
-    height: 2.625rem;
+    width: 2rem;
+    height: 2rem;
 
     border-radius: 7.21875rem;
     background: linear-gradient(167deg, #01bd78 9.63%, #02c6a6 113.93%);
@@ -9,6 +9,7 @@
     p {
       user-select: none;
       color: #fff;
+      font-size: 0.875rem;
       text-align: center;
       font-family: var(--font-inter);
       font-style: normal;
