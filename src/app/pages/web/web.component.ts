@@ -6,13 +6,12 @@ import {
   OnInit,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
 import {finalize, tap} from 'rxjs';
 
 import {AccountMenuComponent} from '@components/account-menu/account-menu.component';
 import {LoaderComponent} from '@components/loader/loader.component';
 import {SidebarDesktopComponent} from '@components/sidebar-desktop/sidebar-desktop.component';
-import {PageWebMainComponent} from '@pages/web/main/main.component';
 import {AuthService} from '@service/auth/auth.service';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
 import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
@@ -27,8 +26,8 @@ import {
   imports: [
     LoaderComponent,
     AccountMenuComponent,
-    PageWebMainComponent,
     SidebarDesktopComponent,
+    RouterOutlet,
   ],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
