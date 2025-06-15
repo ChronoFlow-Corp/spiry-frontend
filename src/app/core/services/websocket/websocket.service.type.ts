@@ -10,11 +10,6 @@ export interface ConnectionTypeMessage {
   data: ConnectionType;
 }
 
-export interface ConnectionEstablishedMessage {
-  type: 'connection-established';
-  data: {connectionType: ConnectionType};
-}
-
 export interface WebSocketErrorMessage {
   type: 'error';
   data: {message: string};
@@ -41,7 +36,6 @@ export type AIResponseMessage = AIChunkMessage | AIDoneMessage | AIErrorMessage;
 
 export type WebSocketMessage =
   | ConnectionTypeMessage
-  | ConnectionEstablishedMessage
   | WebSocketErrorMessage
   | AIResponseMessage;
 

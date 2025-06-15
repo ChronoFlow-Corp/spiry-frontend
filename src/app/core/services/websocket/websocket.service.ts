@@ -3,9 +3,7 @@ import {effect, inject, Injectable, OnDestroy} from '@angular/core';
 import {ENVIRONMENT_TOKEN} from '@environments/environment.type';
 import {
   AIResponseMessage,
-  ConnectionEstablishedMessage,
   ConnectionState,
-  ConnectionType,
   WebSocketErrorMessage,
   WebSocketMessage,
 } from '@service/websocket/websocket.service.type';
@@ -21,6 +19,7 @@ export class WebSocketService implements OnDestroy {
   #ws?: WebSocket;
   #reconnectTimeout?: number;
   #reconnectAttempts = 0;
+  #currentAiResponse = '';
   readonly #maxReconnectAttempts = 3;
   readonly #reconnectDelay = 1000;
 
@@ -53,24 +52,7 @@ export class WebSocketService implements OnDestroy {
     this.#tryConnect();
   }
 
-  setConnectionType(type: ConnectionType): void {
-    if (this.$connectionState() !== ConnectionState.CONNECTED) {
-      console.error('[WS] Cannot set connection type: not connected');
-      return;
-    }
-
-    this.#send({
-      type: 'connection-type',
-      data: type,
-    });
-  }
-
   sendMessage(data: unknown): void {
-    if (this.$connectionState() !== ConnectionState.CONNECTION_TYPE_SET) {
-      console.error('[WS] Cannot send message: connection type not set');
-      return;
-    }
-
     this.#send(data);
   }
 
@@ -120,14 +102,12 @@ export class WebSocketService implements OnDestroy {
         }
       };
 
-      let currentAiResponse = '';
-
       this.#ws.onmessage = (event) => {
         console.log('[WS] Message:', event);
 
         try {
           const message: WebSocketMessage = JSON.parse(event.data);
-          this.#handleMessage(message, currentAiResponse);
+          this.#handleMessage(message);
         } catch (error) {
           console.error('[WS] Failed to parse message:', error);
           this.#websocketStore.setLastError('Failed to parse server message');
@@ -142,20 +122,15 @@ export class WebSocketService implements OnDestroy {
     }
   }
 
-  #handleMessage(message: WebSocketMessage, currentAiResponse: string): void {
+  #handleMessage(message: WebSocketMessage): void {
     switch (message.type) {
-      case 'connection-established':
-        this.#handleConnectionEstablished(
-          message as ConnectionEstablishedMessage,
-        );
-        break;
       case 'error':
         'data' in message
           ? this.#handleError(message as WebSocketErrorMessage)
           : this.#handleAIError(message as AIResponseMessage);
         break;
       case 'chunk':
-        this.#handleChunk(message as AIResponseMessage, currentAiResponse);
+        this.#handleChunk(message as AIResponseMessage);
         break;
       case 'done':
         this.#handleDone();
@@ -163,17 +138,6 @@ export class WebSocketService implements OnDestroy {
       default:
         console.warn('[WS] Unknown message type:', message);
     }
-  }
-
-  #handleConnectionEstablished(message: ConnectionEstablishedMessage): void {
-    console.log(
-      '[WS] Connection type established:',
-      message.data.connectionType,
-    );
-    this.#websocketStore.setConnectionState(
-      ConnectionState.CONNECTION_TYPE_SET,
-    );
-    this.#websocketStore.setConnectionType(message.data.connectionType);
   }
 
   #handleError(message: WebSocketErrorMessage): void {
@@ -189,17 +153,18 @@ export class WebSocketService implements OnDestroy {
     }
   }
 
-  #handleChunk(message: AIResponseMessage, currentAiResponse: string): void {
+  #handleChunk(message: AIResponseMessage): void {
     if (message.type === 'chunk') {
       this.#chatStore.updateIsMessageStreaming(true);
-      currentAiResponse += message.content;
-      this.#replaceTempAIMessage(currentAiResponse);
+      this.#currentAiResponse += message.content;
+      this.#replaceTempAIMessage(this.#currentAiResponse);
     }
   }
 
   #handleDone(): void {
     console.log('[WS] AI response completed');
     this.#chatStore.updateIsMessageStreaming(false);
+    this.#currentAiResponse = '';
   }
 
   #replaceTempAIMessage(content: string): void {
