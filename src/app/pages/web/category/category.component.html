@@ -1,1 +1,7 @@
-<p>category works!</p>
+<div class="page-web-category__wrapper w-100 h-100 f-ai-center f-col">
+  @if (isAnyToolSelected()) {
+    <router-outlet />
+  } @else {
+    <div class="page-web-category-tool-select"></div>
+  }
+</div>

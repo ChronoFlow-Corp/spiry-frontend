@@ -40,6 +40,7 @@
       class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
       routerLink="/web/category/text-content"
       routerLinkActive="active"
+      (click)="toolCategoryStore.selectCategory('text-content')"
     >
       <div class="f-ai-center">
         <svg
@@ -65,6 +66,7 @@
       class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
       routerLink="/web/category/visual-creation"
       routerLinkActive="active"
+      (click)="toolCategoryStore.selectCategory('visual-creation')"
     >
       <div class="f-ai-center">
         <svg
@@ -90,6 +92,7 @@
       class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
       routerLink="/web/category/automation"
       routerLinkActive="active"
+      (click)="toolCategoryStore.selectCategory('automation')"
     >
       <div class="f-ai-center">
         <svg

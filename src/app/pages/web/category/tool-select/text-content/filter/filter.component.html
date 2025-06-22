@@ -1,0 +1,13 @@
+<div class="page-web-category-text-content-filter__wrapper">
+  <div class="page-web-category-text-content-filter__filters f-center">
+    @for (filter of filters; track filter.type) {
+      <button
+        class="page-web-category-text-content-filter__filter c-pointer"
+        [class.active]="$activeFilter() === filter.type"
+        (click)="changeFilter(filter.type)"
+      >
+        {{ filter.name }}
+      </button>
+    }
+  </div>
+</div>
