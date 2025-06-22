@@ -54,6 +54,11 @@
       transition-duration: 200ms;
       transition-timing-function: ease-out;
 
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
       &-title {
         color: var(--text-neutral-tertiary);
         font-family: Inter;
@@ -66,37 +71,6 @@
 
       &.active {
         background-color: var(--background-neutral-main);
-
-        .shared-sidebar-desktop-default-view__tab-icon {
-          svg path {
-            will-change: fill;
-            transition-property: fill;
-            transition-duration: 200ms;
-            transition-timing-function: ease-out;
-          }
-
-          svg {
-            path {
-              fill: var(--icon-colored-brand);
-            }
-
-            path:nth-child(1) {
-              fill: var(--icon-neutral-primary);
-            }
-          }
-
-          &.shared-sidebar-desktop-default-view__tab-icon-visual-creation
-            svg
-            path:not(:nth-child(1)) {
-            fill: #f9600e;
-          }
-
-          &.shared-sidebar-desktop-default-view__tab-icon-automation
-            svg
-            path:not(:nth-child(1)) {
-            fill: #7842eb;
-          }
-        }
       }
     }
   }
