@@ -9,6 +9,10 @@
 }
 
 .page-web__wrapper {
+  .page-web__sidebar-desktop-expand {
+    display: none;
+  }
+
   .shared-global-loader {
     position: absolute;
     z-index: 2;
@@ -49,6 +53,7 @@
     }
 
     .page-web__sidebar-desktop-expand {
+      display: block;
       border: none;
       background-color: transparent;
       position: absolute;

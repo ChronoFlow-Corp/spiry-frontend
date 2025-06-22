@@ -34,16 +34,15 @@ export class PageWebMainDesktopViewComponent {
 
   sendMessage(message: string): void {
     if (!this.$showMessages()) this.$showMessages.set(true);
+    this.#webSocketService.sendMessage({
+      type: 'ai-chat',
+      message,
+    });
 
     this.#chatStore.addMessage({
       role: 'user',
       content: message,
       timestamp: Date.now(),
-    });
-
-    this.#webSocketService.sendMessage({
-      type: 'ai-chat',
-      message,
     });
   }
 }
