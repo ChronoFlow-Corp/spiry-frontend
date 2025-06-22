@@ -10,14 +10,9 @@ import {
   AUTOMATION_TOOLS,
   TEXT_CONTENT_TOOLS,
   ToolCategory,
+  ToolCategoryState,
   VISUAL_CREATION_TOOLS,
-} from '@store/tool-category/tool-category.store.type';
-
-interface CategoryState {
-  readonly currentCategory: Signal<ToolCategory | null>;
-  readonly currentToolName: Signal<string | null>;
-  readonly currentToolNameReadable: Signal<string | null>;
-}
+} from '@store/tool-category/tool-category.store.model';
 
 @Injectable({providedIn: 'root'})
 export class ToolCategoryStore {
@@ -28,10 +23,35 @@ export class ToolCategoryStore {
     this.#getReadableToolName(),
   );
 
-  readonly state: CategoryState = {
+  #createToolSelectedSignal = (category: ToolCategory): Signal<boolean> =>
+    computed(
+      () =>
+        this.state.currentCategory() === category &&
+        !!this.state.currentToolName(),
+    );
+
+  readonly #$isTextContentToolSelected =
+    this.#createToolSelectedSignal('text-content');
+  readonly #$isVisualCreationToolSelected =
+    this.#createToolSelectedSignal('visual-creation');
+  readonly #$isAutomationToolSelected =
+    this.#createToolSelectedSignal('automation');
+
+  readonly #$isAnyToolSelected: Signal<boolean> = computed(
+    () =>
+      this.#$isTextContentToolSelected() ||
+      this.#$isVisualCreationToolSelected() ||
+      this.#$isAutomationToolSelected(),
+  );
+
+  readonly state: ToolCategoryState = {
     currentCategory: this.#$currentCategory.asReadonly(),
     currentToolName: this.#$currentToolName.asReadonly(),
     currentToolNameReadable: this.#$currentToolNameReadable,
+    isTextContentToolSelected: this.#$isTextContentToolSelected,
+    isVisualCreationToolSelected: this.#$isVisualCreationToolSelected,
+    isAutomationToolSelected: this.#$isAutomationToolSelected,
+    isAnyToolSelected: this.#$isAnyToolSelected,
   } as const;
 
   selectCategory = (category: ToolCategory | null): void =>
@@ -39,27 +59,6 @@ export class ToolCategoryStore {
 
   selectTool = (toolName: string | null): void =>
     this.#$currentToolName.set(toolName);
-
-  // #createToolSelectedSignal = (category: Category): Signal<boolean> =>
-  //   computed(
-  //     () =>
-  //       this.state.currentCategory() === category &&
-  //       !!this.state.currentToolName(),
-  //   );
-  //
-  // readonly $isTextContentToolSelected =
-  //   this.#createToolSelectedSignal('text-content');
-  // readonly $isVisualCreationToolSelected =
-  //   this.#createToolSelectedSignal('visual-creation');
-  // readonly $isAutomationToolSelected =
-  //   this.#createToolSelectedSignal('automation');
-  //
-  // readonly $isAnyToolSelected: Signal<boolean> = computed(
-  //   () =>
-  //     this.$isTextContentToolSelected() ||
-  //     this.$isVisualCreationToolSelected() ||
-  //     this.$isAutomationToolSelected(),
-  // );
 
   #getReadableToolName = (): string | null => {
     const currentToolName = this.state.currentToolName();

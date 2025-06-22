@@ -5,26 +5,38 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {finalize, tap} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-import {LoaderComponent} from '@components/loader/loader.component';
-import {AuthService} from '@service/auth/auth.service';
 import {AccountMenuComponent} from '@components/account-menu/account-menu.component';
+import {LoaderComponent} from '@components/loader/loader.component';
+import {SidebarDesktopComponent} from '@components/sidebar-desktop/sidebar-desktop.component';
+import {PageWebMainComponent} from '@pages/web/main/main.component';
+import {AuthService} from '@service/auth/auth.service';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
+import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
 import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
 import {
   AVAILABLE_TOOL_CATEGORIES,
   ToolCategory,
-} from '@store/tool-category/tool-category.store.type';
+} from '@store/tool-category/tool-category.store.model';
 
 @Component({
   selector: '.page-web',
-  imports: [LoaderComponent, AccountMenuComponent],
+  imports: [
+    LoaderComponent,
+    AccountMenuComponent,
+    PageWebMainComponent,
+    SidebarDesktopComponent,
+  ],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.flex]': 'true',
+    '[class.sidebar-desktop-collapsed]': '$isSidebarDesktopCollapsed()',
+  },
 })
 export class WebComponent implements OnInit {
   protected readonly testId = 'page-web';
@@ -35,7 +47,10 @@ export class WebComponent implements OnInit {
   readonly #authService = inject(AuthService);
   readonly #sidebarSwitcherService = inject(SidebarSwitcherService);
   readonly #toolCategoryStore = inject(ToolCategoryStore);
+  readonly #sidebarDesktopStore = inject(SidebarDesktopStore);
 
+  protected readonly $isSidebarDesktopCollapsed =
+    this.#sidebarDesktopStore.state.isCollapsed;
   protected readonly $isAuthenticationInProgress =
     this.#authService.state.isAuthenticationInProgress;
 
@@ -46,6 +61,10 @@ export class WebComponent implements OnInit {
       .responsiveSidebar()
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe();
+  }
+
+  toggleSidebarDesktopIsCollapsed(): void {
+    this.#sidebarDesktopStore.toggleIsCollapsed();
   }
 
   #handleProviderCallback(accessToken: string): void {

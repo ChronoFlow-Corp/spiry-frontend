@@ -1,7 +1,13 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+
+import {UtilsService} from '@service/utils/utils.service';
+import {SidebarMobileStore} from '@store/sidebar-mobile/sidebar-mobile.store';
 
 @Injectable({providedIn: 'root'})
 export class ThemeService {
+  readonly #sidebarMobileStore = inject(SidebarMobileStore);
+  readonly #utilsService = inject(UtilsService);
+
   readonly #mediaQuery: MediaQueryList = window.matchMedia(
     '(prefers-color-scheme: dark)',
   );
@@ -13,6 +19,16 @@ export class ThemeService {
     );
   };
 
-  #updateTheme = (isDark: boolean): void =>
+  #updateTheme = (isDark: boolean): void => {
     document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    this.#utilsService.changeIOSInfoBarColor(
+      window
+        .getComputedStyle(document.body)
+        .getPropertyValue(
+          '--background-neutral-' +
+            (this.#sidebarMobileStore.state.isMenuShown() ? 'gray' : 'main'),
+        )
+        .trim(),
+    );
+  };
 }

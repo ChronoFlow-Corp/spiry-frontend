@@ -1,0 +1,22 @@
+:host {
+  height: 100%;
+  width: 100%;
+}
+
+.page-web-main__wrapper {
+  .page-web-main-desktop-view {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .page-web-main__wrapper {
+    .page-web-main-mobile-view {
+      display: none;
+    }
+
+    .page-web-main-desktop-view {
+      display: block;
+    }
+  }
+}

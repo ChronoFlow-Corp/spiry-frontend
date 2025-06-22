@@ -1,4 +1,16 @@
+import {Signal} from '@angular/core';
+
 export type ToolCategory = 'text-content' | 'visual-creation' | 'automation';
+
+export interface ToolCategoryState {
+  readonly currentCategory: Signal<ToolCategory | null>;
+  readonly currentToolName: Signal<string | null>;
+  readonly currentToolNameReadable: Signal<string | null>;
+  readonly isTextContentToolSelected: Signal<boolean>;
+  readonly isVisualCreationToolSelected: Signal<boolean>;
+  readonly isAutomationToolSelected: Signal<boolean>;
+  readonly isAnyToolSelected: Signal<boolean>;
+}
 
 export const AVAILABLE_TOOL_CATEGORIES: readonly ToolCategory[] = [
   'text-content',

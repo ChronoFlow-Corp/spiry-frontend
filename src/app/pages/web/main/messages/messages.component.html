@@ -1,0 +1,30 @@
+@if ($messages().length) {
+  <div
+    class="page-web-main-messages__wrapper w-100 f-col no-scrollbar"
+    #wrapper
+  >
+    @for (message of $messages(); track $index; let first = $first) {
+      @if (first) {
+        <p
+          class="page-web-main-messages__message"
+          [ngClass]="'page-web-main-messages__message--' + message.role"
+          [@messageFadeIn]
+        >
+          {{ message.content }}
+        </p>
+      } @else {
+        <p
+          class="page-web-main-messages__message"
+          [ngClass]="'page-web-main-messages__message--' + message.role"
+          [@messageOpacity]
+        >
+          @if (message.role === 'ai' && !message.content) {
+            <div class="page-web-main-messages__message--loader"></div>
+          } @else {
+            {{ message.content }}
+          }
+        </p>
+      }
+    }
+  </div>
+}

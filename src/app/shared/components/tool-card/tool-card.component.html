@@ -1,0 +1,28 @@
+@let templateCategoryName = $headerText();
+
+<a [routerLink]="$routerLink()">
+  @let templateShowHeader = $showHeader();
+
+  <div
+    class="shared-tool-card__wrapper f-col"
+    [class.with-header]="templateShowHeader"
+  >
+    <div class="shared-tool-card__info f-col h-100">
+      @if (templateShowHeader) {
+        <div class="shared-tool-card__header flex">
+          <div class="shared-tool-card__header-icon">
+            <ng-content select=".shared-tool-card__header-icon" />
+          </div>
+
+          <p class="shared-tool-card__header-title">
+            {{ templateCategoryName }}
+          </p>
+        </div>
+      }
+
+      <p class="shared-tool-card__title">{{ $title() }}</p>
+    </div>
+
+    <ng-content select=".shared-tool-card__icon" />
+  </div>
+</a>

@@ -1,0 +1,28 @@
+@let templateShowMessages = $showMessages();
+<div
+  class="page-web-main-desktop-view__wrapper f-ai-center f-col w-100 h-100 no-scrollbar"
+  [class.show-chat]="templateShowMessages"
+>
+  @if (templateShowMessages) {
+    <div class="page-web-main-messages" [messages]="$messages()"></div>
+
+    <div
+      class="shared-ai-input"
+      (submit)="sendMessage($event)"
+      [disableSubmitButton]="$isMessageStreaming()"
+    ></div>
+  } @else {
+    <p class="page-web-main-desktop-view__title">
+      Welcome to Spiry <br />
+      <span>What are we doing today?</span>
+    </p>
+
+    <div
+      class="shared-ai-input"
+      (submit)="sendMessage($event)"
+      [disableSubmitButton]="$isMessageStreaming()"
+    ></div>
+
+    <div class="page-web-main-desktop-view-popular-tools"></div>
+  }
+</div>

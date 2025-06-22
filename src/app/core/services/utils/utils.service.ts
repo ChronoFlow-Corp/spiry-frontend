@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 
-import {blockDocument, unblockDocument} from '@core/utils/utils';
+import {
+  blockDocument,
+  changeIOSInfoBarColor,
+  unblockDocument,
+} from '@core/utils/utils';
 
 @Injectable({providedIn: 'root'})
 export class UtilsService {
@@ -10,5 +14,9 @@ export class UtilsService {
 
   unblockDocument(): void {
     unblockDocument();
+  }
+
+  changeIOSInfoBarColor(toColor: string): void {
+    changeIOSInfoBarColor(toColor);
   }
 }

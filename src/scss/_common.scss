@@ -2,7 +2,6 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background-color: var(--background-neutral-main);
   font-style: normal;
   font-family: var(--font-inter);
   font-weight: 400;
@@ -15,10 +14,12 @@ body {
 
 body {
   padding-top: 3.75rem; // sidebar mobile height
+  background-color: var(--background-neutral-main);
 }
 
 @media screen and (min-width: 768px) {
   body {
     padding-top: 0;
+    background-color: var(--background-neutral-gray);
   }
 }

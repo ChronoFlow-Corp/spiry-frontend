@@ -1,15 +1,8 @@
-import {
-  inject,
-  Injectable,
-  Injector,
-  runInInjectionContext,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {debounceTime, fromEvent, Observable, tap} from 'rxjs';
 
 import {SidebarMobileComponent} from '@components/sidebar-mobile/sidebar-mobile.component';
-import {OverlayCustom} from '@service/overlay/overlay-custom';
+import {SidebarMobileStore} from '@core/stores/sidebar-mobile/sidebar-mobile.store';
 import {OverlayService} from '@service/overlay/overlay.service';
 import {SidebarMobileService} from '@service/sidebar-mobile/sidebar-mobile.service';
 import {SIDEBAR_MOBILE_OVERLAY_CONFIG} from '@service/sidebar-mobile/sidebar-mobile.service.type';
@@ -17,73 +10,45 @@ import {SIDEBAR_MOBILE_OVERLAY_CONFIG} from '@service/sidebar-mobile/sidebar-mob
 @Injectable({providedIn: 'root'})
 export class SidebarSwitcherService {
   readonly #overlayService = inject(OverlayService);
+  readonly #sidebarMobileStore = inject(SidebarMobileStore);
   readonly #sidebarMobileService = inject(SidebarMobileService);
-  readonly #injector = inject(Injector);
 
   readonly #mobileQuery = window.matchMedia('(max-width: 767px)');
 
-  readonly #isSidebarMobileOpened: WritableSignal<boolean> = signal(false);
-  readonly #isSidebarDesktopOpened: WritableSignal<boolean> = signal(false);
+  readonly #isSidebarMobileOpened = this.#sidebarMobileStore.state.isShown;
 
-  #sidebarMobileOverlay: OverlayCustom<SidebarMobileComponent> | null = null;
+  readonly #sidebarMobileOverlay =
+    this.#overlayService.init<SidebarMobileComponent>();
 
-  responsiveSidebar = (): Observable<Event> => {
-    this.#switchSidebars();
+  responsiveSidebar(): Observable<Event> {
+    this.#toggleMobileSidebar();
     return fromEvent(window, 'resize').pipe(
       debounceTime(10),
-      tap(() => this.#switchSidebars()),
+      tap(() => this.#toggleMobileSidebar()),
     );
-  };
+  }
 
-  #switchSidebars = () => {
-    const isMobile = this.#mobileQuery.matches;
-    if (isMobile) {
-      this.#closeDesktopSidebar();
-      this.#openMobileSidebar();
-    } else {
-      this.#closeMobileSidebar();
-      this.#openDesktopSidebar();
-    }
-  };
+  #toggleMobileSidebar(): void {
+    this.#mobileQuery.matches
+      ? this.#openMobileSidebar()
+      : this.#closeMobileSidebar();
+  }
 
   #openMobileSidebar(): void {
     if (this.#isSidebarMobileOpened()) return;
-
-    runInInjectionContext(this.#injector, () => {
-      this.#sidebarMobileOverlay =
-        this.#overlayService.init<SidebarMobileComponent>();
-
-      this.#overlayService.create(
-        this.#sidebarMobileOverlay,
-        SidebarMobileComponent,
-        SIDEBAR_MOBILE_OVERLAY_CONFIG,
-      );
-
-      this.#sidebarMobileService.open(this.#sidebarMobileOverlay);
-      this.#isSidebarMobileOpened.set(true);
-    });
+    this.#overlayService.create(
+      this.#sidebarMobileOverlay,
+      SidebarMobileComponent,
+      SIDEBAR_MOBILE_OVERLAY_CONFIG,
+    );
+    this.#sidebarMobileService.open(this.#sidebarMobileOverlay);
+    this.#sidebarMobileStore.setIsShown(true);
   }
 
   #closeMobileSidebar(): void {
     if (!this.#isSidebarMobileOpened()) return;
-
-    if (this.#sidebarMobileOverlay) {
-      this.#sidebarMobileService.close(this.#sidebarMobileOverlay);
-      this.#sidebarMobileOverlay = null;
-    }
-
-    this.#isSidebarMobileOpened.set(false);
-  }
-
-  #openDesktopSidebar(): void {
-    if (this.#isSidebarDesktopOpened()) return;
-
-    this.#isSidebarDesktopOpened.set(true);
-  }
-
-  #closeDesktopSidebar(): void {
-    if (!this.#isSidebarDesktopOpened()) return;
-
-    this.#isSidebarDesktopOpened.set(false);
+    this.#sidebarMobileService.close(this.#sidebarMobileOverlay);
+    this.#sidebarMobileStore.setIsShown(false);
+    this.#sidebarMobileStore.closeMenu();
   }
 }

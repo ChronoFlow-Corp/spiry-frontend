@@ -1,0 +1,61 @@
+:host {
+  width: 100%;
+}
+
+.page-web-main-messages__wrapper {
+  gap: 1.25rem;
+  padding-bottom: 8rem;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 89dvh;
+  overflow-y: auto;
+
+  .page-web-main-messages__message {
+    font-family: var(--font-inter);
+    line-height: 1.625rem;
+    max-width: 100%;
+    word-wrap: break-word;
+
+    &--user {
+      margin-left: auto;
+
+      border-radius: 0.75rem;
+      background-color: var(--background-neutral-primary);
+      padding: 0.375rem 0.75rem;
+      color: var(--text-neutral-primary);
+    }
+
+    &--ai {
+      margin-right: auto;
+
+      .page-web-main-messages__message--loader {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: var(--background-neutral-primary-inverse);
+
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        animation-name: blink;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-web-main-messages__wrapper {
+    max-width: 36.875rem;
+    gap: 1.5rem;
+    height: auto;
+    padding-bottom: 4rem;
+  }
+}
