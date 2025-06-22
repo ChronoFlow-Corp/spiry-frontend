@@ -78,10 +78,9 @@ export class TextContentComponent {
     const currentFilter = this.currentFilter();
     if (currentFilter === 'all') return true;
 
-    if (Array.isArray(tool.category))
-      return tool.category.includes(currentFilter);
-
-    return tool.category === currentFilter;
+    return Array.isArray(tool.category)
+      ? tool.category.includes(currentFilter)
+      : tool.category === currentFilter;
   }
 
   #getToolsByCategory = (category: TextContentFilterType): TextContentTool[] =>

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VisualCreationComponent } from './visual-creation.component';
+import {VisualCreationComponent} from './visual-creation.component';
 
 describe('VisualCreationComponent', () => {
   let component: VisualCreationComponent;
@@ -8,9 +8,8 @@ describe('VisualCreationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VisualCreationComponent]
-    })
-    .compileComponents();
+      imports: [VisualCreationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VisualCreationComponent);
     component = fixture.componentInstance;

@@ -1,12 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'spiry-automation',
   imports: [],
   templateUrl: './automation.component.html',
   styleUrl: './automation.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutomationComponent {
-
-}
+export class AutomationComponent {}

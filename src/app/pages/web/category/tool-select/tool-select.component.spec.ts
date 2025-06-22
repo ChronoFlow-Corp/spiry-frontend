@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ToolSelectComponent } from './tool-select.component';
+import {ToolSelectComponent} from './tool-select.component';
 
 describe('ToolSelectComponent', () => {
   let component: ToolSelectComponent;
@@ -8,9 +8,8 @@ describe('ToolSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ToolSelectComponent]
-    })
-    .compileComponents();
+      imports: [ToolSelectComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ToolSelectComponent);
     component = fixture.componentInstance;
