@@ -28,6 +28,15 @@ export const FILTERS: readonly Filter[] = [
   },
 ];
 
+export type TextContentConfigLanguage =
+  | 'en'
+  | 'es'
+  | 'de'
+  | 'ru'
+  | 'zh'
+  | 'ko'
+  | 'ja';
+
 interface Filter {
   name: string;
   type: TextContentFilterType;
