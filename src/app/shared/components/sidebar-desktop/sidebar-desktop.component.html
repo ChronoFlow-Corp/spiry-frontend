@@ -1,25 +1,24 @@
-@let templateState = state;
+@let isAnyToolSelected = state.isAnyToolSelected();
+@let isTextContentToolSelected = state.isTextContentToolSelected();
 
 <div
   class="shared-sidebar-desktop__wrapper"
-  [ngClass]="{
-    'default-view': !templateState.isAnyToolSelected,
-    'text-content-config': templateState.isTextContentToolSelected,
-  }"
+  [class.default-view]="!isAnyToolSelected"
+  [class.text-content-config]="isTextContentToolSelected"
 >
-  @if (!templateState.isAnyToolSelected) {
+  @if (!isAnyToolSelected) {
     <div class="shared-sidebar-desktop-default-view"></div>
   } @else {
-    @if (templateState.isTextContentToolSelected) {
-      <div class="sidebar-text-content-config"></div>
+    @if (isTextContentToolSelected) {
+      <div class="shared-sidebar-desktop-text-content-config"></div>
     }
 
-    @if (templateState.isVisualCreationToolSelected) {
-      <div class="sidebar-visual-creation-config"></div>
+    @if (state.isVisualCreationToolSelected()) {
+      <div class="shared-sidebar-desktop-visual-creation-config"></div>
     }
 
-    @if (templateState.isAutomationToolSelected) {
-      <div class="sidebar-automation-config"></div>
+    @if (state.isAutomationToolSelected()) {
+      <div class="shared-sidebar-desktop-automation-config"></div>
     }
   }
 </div>

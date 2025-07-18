@@ -3,7 +3,7 @@
     class="sidebar-mobile-burger-menu__tab f-ai-center w-100 c-pointer"
     routerLinkActive="active"
     routerLink="/web/category/text-content"
-    (click)="closeMenu()"
+    (click)="toolCategoryStore.selectCategory('text-content'); closeMenu()"
   >
     <div class="sidebar-mobile-burger-menu__tab-icon f-ai-center">
       <svg
@@ -39,7 +39,7 @@
     class="sidebar-mobile-burger-menu__tab f-ai-center w-100 c-pointer"
     routerLinkActive="active"
     routerLink="/web/category/visual-creation"
-    (click)="closeMenu()"
+    (click)="toolCategoryStore.selectCategory('visual-creation'); closeMenu()"
   >
     <div
       class="sidebar-mobile-burger-menu__tab-icon sidebar-mobile-burger-menu__tab-icon-visual-creation f-ai-center"
@@ -69,7 +69,7 @@
     class="sidebar-mobile-burger-menu__tab f-ai-center w-100 c-pointer"
     routerLinkActive="active"
     routerLink="/web/category/automation"
-    (click)="closeMenu()"
+    (click)="toolCategoryStore.selectCategory('automation'); closeMenu()"
   >
     <div
       class="sidebar-mobile-burger-menu__tab-icon sidebar-mobile-burger-menu__tab-icon-automation f-ai-center"

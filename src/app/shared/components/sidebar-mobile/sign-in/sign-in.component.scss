@@ -27,9 +27,8 @@
 
     .shared-sidebar-mobile-sign-in__sign-in-button-text {
       color: var(--text-neutral-primary-inverse);
-      font-family: Inter;
+      font-family: var(--font-inter);
       font-size: 1rem;
-      font-style: normal;
       font-weight: 500;
       line-height: 1.375rem;
     }

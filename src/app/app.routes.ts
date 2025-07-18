@@ -10,7 +10,9 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('@pages/web/web.component').then((c) => c.WebComponent),
+          import('@pages/web/main/main.component').then(
+            (c) => c.PageWebMainComponent,
+          ),
       },
       {
         path: 'category/:categoryName',

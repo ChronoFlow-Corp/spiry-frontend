@@ -25,7 +25,7 @@
       font-feature-settings:
         'liga' off,
         'clig' off;
-      font-family: 'Bricolage Grotesque';
+      font-family: var(--font-bricolage-grotesque);
       font-size: 1.2625rem;
       font-weight: 700;
       line-height: 1.7675rem;
@@ -60,11 +60,9 @@
       }
 
       &-title {
-        color: var(--text-neutral-tertiary);
-        font-family: Inter;
+        color: var(--text-neutral-primary);
+        font-family: var(--font-inter);
         font-size: 0.875rem;
-        font-style: normal;
-        font-weight: 400;
         line-height: 1.5rem;
         letter-spacing: -0.0175rem;
       }

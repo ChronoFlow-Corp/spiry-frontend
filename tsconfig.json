@@ -12,7 +12,8 @@
       "@environments/*": ["src/app/core/environments/*"],
       "@shared/*": ["src/app/shared/*"],
       "@components/*": ["src/app/shared/components/*"],
-      "@pages/*": ["src/app/pages/*"]
+      "@pages/*": ["src/app/pages/*"],
+      "@category/*": ["src/app/pages/web/category/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,
