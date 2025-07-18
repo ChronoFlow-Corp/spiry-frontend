@@ -27,31 +27,7 @@
     }
 
     &.active {
-      background-color: var(--background-neutral-main);
-
-      .sidebar-mobile-burger-menu__tab-icon {
-        svg {
-          path {
-            fill: var(--icon-colored-brand);
-          }
-
-          path:nth-child(1) {
-            fill: var(--icon-neutral-primary);
-          }
-        }
-
-        &.sidebar-mobile-burger-menu__tab-icon-visual-creation
-          svg
-          path:not(:nth-child(1)) {
-          fill: #f9600e;
-        }
-
-        &.sidebar-mobile-burger-menu__tab-icon-automation
-          svg
-          path:not(:nth-child(1)) {
-          fill: #7842eb;
-        }
-      }
+      background-color: var(--background-neutral-primary);
     }
   }
 }
