@@ -6,7 +6,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 
-import {PageWebMainDesktopViewPopularToolsComponent} from '@pages/web/main/desktop-view/popular-tools/popular-tools.component';
 import {PageWebMainMessagesComponent} from '@pages/web/main/messages/messages.component';
 import {WebSocketService} from '@service/websocket/websocket.service';
 import {AiInputComponent} from '@shared/components/ai-input/ai-input.component';
@@ -14,11 +13,7 @@ import {ChatStore} from '@store/chat/chat.store';
 
 @Component({
   selector: '.page-web-main-desktop-view',
-  imports: [
-    AiInputComponent,
-    PageWebMainDesktopViewPopularToolsComponent,
-    PageWebMainMessagesComponent,
-  ],
+  imports: [AiInputComponent, PageWebMainMessagesComponent],
   templateUrl: './desktop-view.component.html',
   styleUrl: './desktop-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
