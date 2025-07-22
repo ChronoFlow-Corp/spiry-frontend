@@ -1,9 +1,13 @@
 @let templateShowMessages = $showMessages();
+
 <div
   class="page-web-main-mobile-view__wrapper f-ai-center f-col w-100 h-100"
   [class.show-chat]="templateShowMessages"
 >
-  <div class="page-web-main-messages" [messages]="$messages()"></div>
+  <div
+    class="page-web-main-messages"
+    [messages]="$currentChat()?.messages ?? []"
+  ></div>
 
   <p
     class="page-web-main-mobile-view__title"
@@ -15,7 +19,7 @@
 
   <div
     class="shared-ai-input mt-a"
-    (submit)="sendMessage($event)"
+    (submit)="send($event)"
     [disableSubmitButton]="$isMessageStreaming()"
   ></div>
 </div>

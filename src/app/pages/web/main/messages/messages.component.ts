@@ -5,8 +5,8 @@ import {
   effect,
   ElementRef,
   input,
-  InputSignal,
   Signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 
@@ -14,7 +14,7 @@ import {
   MESSAGE_FADE_IN_ANIMATION,
   MESSAGE_OPACITY_ANIMATION,
 } from '@pages/web/main/messages/messages.component.animation';
-import {Message} from '@store/chat/chat.store.type';
+import {Message} from '@service/chat/chat.service.type';
 
 @Component({
   selector: '.page-web-main-messages',
@@ -28,19 +28,21 @@ export class PageWebMainMessagesComponent {
   protected readonly $wrapper: Signal<ElementRef<HTMLDivElement> | undefined> =
     viewChild('wrapper');
 
-  readonly $messages: InputSignal<Message[]> = input.required({
+  readonly $messages = input.required<Message[]>({
     alias: 'messages',
   });
 
   constructor() {
-    effect(() => {
+    effect((onCleanup) => {
       const messages = this.$messages();
-      const wrapper = this.$wrapper();
+      const wrapper = untracked(this.$wrapper);
       if (!messages.length || !wrapper) return;
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         wrapper.nativeElement.scrollTop = wrapper.nativeElement.scrollHeight;
       });
+
+      onCleanup(() => clearTimeout(timer));
     });
   }
 }

@@ -1,0 +1,23 @@
+.shared-chats-history__list {
+  gap: 0.25rem;
+
+  .shared-chats-history__chat {
+    padding: 0.5rem;
+    border-radius: 0.625rem;
+    background-color: transparent;
+
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    transition-property: background-color;
+    will-change: background-color;
+
+    color: var(--text-neutral-primary);
+    font-family: var(--font-inter);
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+
+    &.active {
+      background-color: var(--background-neutral-secondary);
+    }
+  }
+}

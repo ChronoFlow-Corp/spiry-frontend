@@ -1,0 +1,11 @@
+<div class="shared-chats-history__list f-col w-100">
+  @for (chat of $chats(); track chat.id) {
+    <a
+      class="shared-chats-history__chat w-100 text-truncate"
+      [routerLink]="'/web/chat/' + chat.id"
+      routerLinkActive="active"
+    >
+      {{ chat.title }} Lorem ipsum dolor
+    </a>
+  }
+</div>

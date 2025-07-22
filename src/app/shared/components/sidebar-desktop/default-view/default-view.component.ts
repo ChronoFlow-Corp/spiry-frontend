@@ -3,10 +3,11 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
 import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
+import {ChatsHistoryComponent} from '@components/chats-history/chats-history.component';
 
 @Component({
   selector: '.shared-sidebar-desktop-default-view',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, ChatsHistoryComponent],
   templateUrl: './default-view.component.html',
   styleUrl: './default-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

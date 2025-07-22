@@ -30,6 +30,11 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'chat/:chatId',
+        loadComponent: () =>
+          import('@chat/chat.component').then((c) => c.ChatComponent),
+      },
       {path: '**', pathMatch: 'full', redirectTo: 'category/text-content'},
     ],
   },

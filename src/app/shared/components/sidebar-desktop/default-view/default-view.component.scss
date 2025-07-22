@@ -72,4 +72,15 @@
       }
     }
   }
+
+  .shared-sidebar-desktop-default-view__divider {
+    height: 0.0625rem;
+    background-color: var(--stroke-neutral-disabled);
+    border: none;
+  }
+
+  .shared-sidebar-desktop-default-view__chats-history-scroll {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
 }

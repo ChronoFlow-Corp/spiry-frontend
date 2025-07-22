@@ -13,6 +13,7 @@
       "@shared/*": ["src/app/shared/*"],
       "@components/*": ["src/app/shared/components/*"],
       "@pages/*": ["src/app/pages/*"],
+      "@chat/*": ["src/app/pages/web/chat/*"],
       "@category/*": ["src/app/pages/web/category/*"]
     },
     "outDir": "./dist/out-tsc",

@@ -20,12 +20,11 @@ export class WebSocketService implements OnDestroy {
   #reconnectTimeout?: number;
   #reconnectAttempts = 0;
   #currentAiResponse = '';
+
   readonly #maxReconnectAttempts = 3;
   readonly #reconnectDelay = 1000;
 
   readonly $connectionState = this.#websocketStore.state.connectionState;
-  readonly $connectionType = this.#websocketStore.state.connectionType;
-  readonly $lastError = this.#websocketStore.state.lastError;
 
   constructor() {
     effect(
@@ -50,27 +49,6 @@ export class WebSocketService implements OnDestroy {
 
     this.#reconnectAttempts = 0;
     this.#tryConnect();
-  }
-
-  sendMessage(data: unknown): void {
-    this.#send(data);
-  }
-
-  sendRawMessage(data: unknown): void {
-    if (this.$connectionState() === ConnectionState.DISCONNECTED) {
-      console.error('[WS] Cannot send message: not connected');
-      return;
-    }
-
-    this.#send(data);
-  }
-
-  #send(data: unknown): void {
-    if (this.#ws?.readyState === WebSocket.OPEN) {
-      this.#ws.send(JSON.stringify(data));
-    } else {
-      console.error('[WS] Tried to send while not connected');
-    }
   }
 
   #tryConnect(): void {
