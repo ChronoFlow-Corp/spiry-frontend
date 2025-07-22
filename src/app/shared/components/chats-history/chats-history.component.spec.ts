@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ChatsHistoryComponent } from './chats-history.component';
+import {ChatsHistoryComponent} from './chats-history.component';
 
 describe('ChatsHistoryComponent', () => {
   let component: ChatsHistoryComponent;
@@ -8,9 +8,8 @@ describe('ChatsHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatsHistoryComponent]
-    })
-    .compileComponents();
+      imports: [ChatsHistoryComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChatsHistoryComponent);
     component = fixture.componentInstance;

@@ -46,7 +46,19 @@ export class AuthService {
       return;
     }
 
-    this.#getMe().subscribe();
+    this.#getMe()
+      .pipe(
+        tap(({username, email}) => {
+          this.#username.set(username);
+          this.#email.set(email);
+          this.#isAuthenticated.set(true);
+        }),
+        catchError(() => {
+          this.#logout();
+          return throwError(() => new Error('Authentication failed'));
+        }),
+      )
+      .subscribe();
   }
 
   authenticateWithProvider(
@@ -86,19 +98,7 @@ export class AuthService {
   }
 
   #getMe(): Observable<UserInfo> {
-    return this.#http
-      .get<UserInfo>(`${this.#environment.apiUrl}/users/me`)
-      .pipe(
-        tap(({username, email}) => {
-          this.#username.set(username);
-          this.#email.set(email);
-          this.#isAuthenticated.set(true);
-        }),
-        catchError(() => {
-          this.#logout();
-          return throwError(() => new Error('Authentication failed'));
-        }),
-      );
+    return this.#http.get<UserInfo>(`${this.#environment.apiUrl}/users/me`);
   }
 
   #isTokenStored(): boolean {
