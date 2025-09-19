@@ -19,7 +19,6 @@ import {LoaderComponent} from '@components/loader/loader.component';
 import {SidebarDesktopComponent} from '@components/sidebar-desktop/sidebar-desktop.component';
 import {AuthService} from '@service/auth/auth.service';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
-import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
 import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
 import {
   AVAILABLE_TOOL_CATEGORIES,
@@ -40,7 +39,6 @@ import {ChatStore} from '@store/chat/chat.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.flex]': 'true',
-    '[class.sidebar-desktop-collapsed]': '$isSidebarDesktopCollapsed()',
   },
 })
 export class WebComponent implements OnInit {
@@ -52,11 +50,8 @@ export class WebComponent implements OnInit {
   readonly #authService = inject(AuthService);
   readonly #sidebarSwitcherService = inject(SidebarSwitcherService);
   readonly #toolCategoryStore = inject(ToolCategoryStore);
-  readonly #sidebarDesktopStore = inject(SidebarDesktopStore);
   readonly #chatStore = inject(ChatStore);
 
-  protected readonly $isSidebarDesktopCollapsed =
-    this.#sidebarDesktopStore.state.isCollapsed;
   protected readonly $isAuthenticationInProgress =
     this.#authService.state.isAuthenticationInProgress;
 
@@ -69,10 +64,6 @@ export class WebComponent implements OnInit {
       .responsiveSidebar()
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe();
-  }
-
-  toggleSidebarDesktopIsCollapsed(): void {
-    this.#sidebarDesktopStore.toggleIsCollapsed();
   }
 
   #handleProviderCallback(accessToken: string): void {

@@ -2,7 +2,12 @@ $height: 100dvh;
 $default-width: 11.25rem;
 $text-content-config-width: 23.75rem;
 
-$collapse-will-change: width, opacity, visibility;
-$collapse-transition-property: width, opacity, visibility;
+$collapse-will-change: width;
+$collapse-transition-property: width;
 $collapse-transition-duration: 350ms;
 $collapse-transition-timing-function: ease-out;
+
+$collapse-tabs-content-will-change: opacity;
+$collapse-tabs-content-transition-property: opacity;
+$collapse-tabs-content-transition-duration: 350ms;
+$collapse-tabs-content-timing-function: ease-out;

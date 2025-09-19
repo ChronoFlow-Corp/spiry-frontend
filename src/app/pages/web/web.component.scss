@@ -9,10 +9,6 @@
 }
 
 .page-web__wrapper {
-  .page-web__sidebar-desktop-expand {
-    display: none;
-  }
-
   .shared-global-loader {
     position: absolute;
     z-index: 2;
@@ -50,17 +46,6 @@
       border-radius: 1rem;
       border: 0.078rem solid var(--stroke-neutral-disabled);
       box-shadow: 0 0.25rem 1.0375rem 0 rgba(0, 0, 0, 0.03);
-    }
-
-    .page-web__sidebar-desktop-expand {
-      display: block;
-      border: none;
-      background-color: transparent;
-      position: absolute;
-      top: 2rem;
-      left: 2rem;
-      transform: rotate(180deg);
-      z-index: 1;
     }
 
     .shared-account-menu {

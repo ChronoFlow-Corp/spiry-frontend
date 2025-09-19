@@ -26,6 +26,7 @@ export class PageWebMainDesktopViewComponent {
   protected readonly $currentChat = this.#chatStore.state.currentChat;
 
   send(message: string) {
+    this.$showMessages.set(true);
     // const chat = this.$chat();
     // if (chat) this.#chatService.sendMessage(chat.id, message);
     // else this.#chatService.createChat(message);
