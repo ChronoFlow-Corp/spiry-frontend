@@ -13,7 +13,6 @@ import {AccountMenuComponent} from '@shared/components/account-menu/account-menu
     RouterLink,
     RouterLinkActive,
     ChatsHistoryComponent,
-    NgOptimizedImage,
     AccountMenuComponent,
   ],
   templateUrl: './default-view.component.html',

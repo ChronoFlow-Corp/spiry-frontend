@@ -28,12 +28,7 @@ import {ChatStore} from '@store/chat/chat.store';
 
 @Component({
   selector: '.page-web',
-  imports: [
-    LoaderComponent,
-    AccountMenuComponent,
-    SidebarDesktopComponent,
-    RouterOutlet,
-  ],
+  imports: [LoaderComponent, SidebarDesktopComponent, RouterOutlet],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
