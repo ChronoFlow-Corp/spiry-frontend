@@ -1,12 +1,11 @@
 <div class="shared-sidebar-desktop-default-view__wrapper f-col">
+  @let isSidebarCollapsed = isSidebarDesktopCollapsed();
   <div
     class="shared-sidebar-desktop-default-view__header flex f-ai-center w-100"
+    [class.sidebar-collapsed]="isSidebarCollapsed"
   >
-    @let isSidebarCollapsed = isSidebarDesktopCollapsed();
-
     <a
       class="shared-sidebar-desktop-default-view__header-logo f-center c-pointer"
-      [class.sidebar-collapsed]="isSidebarCollapsed"
       (click)="goHome()"
     >
       <img
@@ -22,6 +21,9 @@
       class="shared-sidebar-desktop-default-view__header-collapse-toggle f-center ml-a c-pointer"
       type="button"
       (click)="sidebarDesktopStore.toggleIsCollapsed()"
+      [attr.data-tooltip]="
+        (isSidebarCollapsed ? 'Open' : 'Close') + ' ' + 'Sidebar'
+      "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +51,7 @@
       class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
       routerLink="/"
       [class.sidebar-collapsed]="isSidebarCollapsed"
+      [attr.data-tooltip]="'New Chat'"
     >
       <div class="f-ai-center">
         <svg
@@ -80,6 +83,7 @@
     <button
       class="shared-sidebar-desktop-default-view__tab shared-sidebar-desktop-default-view__tab-search-chats f-ai-center w-100 c-pointer"
       [class.sidebar-collapsed]="isSidebarCollapsed"
+      [attr.data-tooltip]="'Search chats'"
     >
       <div class="f-ai-center">
         <svg
@@ -114,6 +118,7 @@
       routerLink="/web/category/text-content"
       routerLinkActive="active"
       (click)="toolCategoryStore.selectCategory('text-content')"
+      [attr.data-tooltip]="'Text Content'"
     >
       <div class="f-ai-center">
         <svg
@@ -159,6 +164,7 @@
       routerLink="/web/category/visual-creation"
       routerLinkActive="active"
       (click)="toolCategoryStore.selectCategory('visual-creation')"
+      [attr.data-tooltip]="'Visual Creation'"
     >
       <div class="f-ai-center">
         <svg
@@ -191,6 +197,7 @@
     <a
       class="shared-sidebar-desktop-default-view__tab shared-sidebar-desktop-default-view__tab-automation f-ai-center w-100 c-pointer"
       [class.sidebar-collapsed]="isSidebarCollapsed"
+      [attr.data-tooltip]="'Automation'"
     >
       <div class="f-ai-center">
         <svg
@@ -237,6 +244,7 @@
     <button
       class="shared-sidebar-desktop-default-view__tab f-ai-center w-100 c-pointer"
       [class.sidebar-collapsed]="isSidebarCollapsed"
+      [attr.data-tooltip]="'History'"
     >
       <div class="f-ai-center">
         <svg

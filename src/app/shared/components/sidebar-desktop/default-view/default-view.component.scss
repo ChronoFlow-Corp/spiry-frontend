@@ -9,6 +9,33 @@
   gap: 1rem;
   padding: 0.5rem;
 
+  .shared-sidebar-desktop-default-view__header
+    .shared-sidebar-desktop-default-view__header-collapse-toggle,
+  .shared-sidebar-desktop-default-view__tabs
+    .shared-sidebar-desktop-default-view__tab {
+    position: relative;
+
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--background-neutral-primary-inverse);
+      color: var(--text-neutral-primary-inverse);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.6875rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease-out;
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+
   .shared-sidebar-desktop-default-view__header {
     &-logo {
       padding: 0.3125rem;
@@ -24,11 +51,6 @@
         width: 1.625rem;
         height: 1.625rem;
       }
-
-      //&.sidebar-collapsed {
-      //  opacity: 0;
-      //  visibility: hidden;
-      //}
 
       &:hover {
         background-color: var(--background-neutral-primary);
@@ -49,6 +71,18 @@
 
       &:hover {
         background-color: var(--background-neutral-primary);
+      }
+    }
+
+    &.sidebar-collapsed {
+      justify-content: center;
+
+      .shared-sidebar-desktop-default-view__header-logo {
+        display: none;
+      }
+
+      .shared-sidebar-desktop-default-view__header-collapse-toggle {
+        margin-left: 0;
       }
     }
   }
@@ -81,10 +115,10 @@
       line-height: 1.5rem;
       letter-spacing: -0.0175rem;
 
-      will-change: sidebarDesktop.$collapse-tabs-content-will-change;
-      transition-property: sidebarDesktop.$collapse-tabs-content-transition-property;
-      transition-duration: sidebarDesktop.$collapse-tabs-content-transition-duration;
-      transition-timing-function: sidebarDesktop.$collapse-tabs-content-timing-function;
+      // will-change: sidebarDesktop.$collapse-tabs-content-will-change;
+      // transition-property: sidebarDesktop.$collapse-tabs-content-transition-property;
+      // transition-duration: sidebarDesktop.$collapse-tabs-content-transition-duration;
+      // transition-timing-function: sidebarDesktop.$collapse-tabs-content-timing-function;
     }
 
     &-search-chats {
@@ -96,8 +130,10 @@
     }
 
     &.sidebar-collapsed {
+      justify-content: center;
+
       .shared-sidebar-desktop-default-view__tab-title {
-        opacity: 0;
+        display: none;
       }
     }
 
