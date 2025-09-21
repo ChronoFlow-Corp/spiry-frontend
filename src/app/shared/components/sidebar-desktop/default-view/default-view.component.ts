@@ -5,6 +5,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
 import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
 import {ChatsHistoryComponent} from '@components/chats-history/chats-history.component';
+import {AccountMenuComponent} from '@shared/components/account-menu/account-menu.component';
 
 @Component({
   selector: '.shared-sidebar-desktop-default-view',
@@ -13,6 +14,7 @@ import {ChatsHistoryComponent} from '@components/chats-history/chats-history.com
     RouterLinkActive,
     ChatsHistoryComponent,
     NgOptimizedImage,
+    AccountMenuComponent,
   ],
   templateUrl: './default-view.component.html',
   styleUrl: './default-view.component.scss',

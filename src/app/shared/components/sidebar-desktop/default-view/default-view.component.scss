@@ -18,6 +18,8 @@
     &::after {
       content: attr(data-tooltip);
       position: absolute;
+
+      font-family: var(--font-inter);
       left: 100%;
       top: 50%;
       transform: translateY(-50%);
@@ -47,7 +49,7 @@
       transition-duration: 200ms;
       transition-timing-function: ease-out;
 
-      img {
+      svg {
         width: 1.625rem;
         height: 1.625rem;
       }
