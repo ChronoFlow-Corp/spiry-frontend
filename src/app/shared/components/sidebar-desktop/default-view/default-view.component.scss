@@ -20,7 +20,7 @@
       position: absolute;
 
       font-family: var(--font-inter);
-      left: 100%;
+      left: calc(100% + 0.25rem);
       top: 50%;
       transform: translateY(-50%);
       background-color: var(--background-neutral-primary-inverse);
