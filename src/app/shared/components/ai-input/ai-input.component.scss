@@ -1,9 +1,9 @@
 .shared-ai-input__wrapper {
-  width: 37.625rem;
-  border-radius: 1.375rem;
+  width: 42.5rem;
+  border-radius: 1.6875rem;
   border: 0.078125rem solid var(--stroke-neutral-disabled);
   background-color: var(--component-ai-input-background);
-  padding: 1rem 1.125rem;
+  padding: 1.125rem;
   gap: 1rem;
 
   box-shadow: var(--component-ai-input-shadow);
@@ -121,21 +121,32 @@
       }
     }
 
-    .shared-ai-input__actions-left-side .shared-ai-input__action-web {
-      border-width: 0.0625rem;
-      border-style: solid;
-      border-color: var(--stroke-neutral-disabled);
+    .shared-ai-input__actions-left-side {
+      gap: 0.5rem;
 
-      &:hover {
-        background-color: var(--background-neutral-primary);
-      }
+      .shared-ai-input__action {
+        border-width: 0.0625rem;
+        border-style: solid;
+        border-color: var(--stroke-neutral-disabled);
 
-      &-active {
-        border-color: var(--stroke-colored-brand);
-        background-color: var(--background-brand-primary-subdued);
+        .shared-ai-input__action-active {
+          border-color: var(--stroke-colored-brand);
+          background-color: var(--background-brand-primary-subdued);
+        }
 
-        svg path {
-          fill: var(--icon-colored-brand);
+        &.shared-ai-input__action-web {
+          &:hover {
+            background-color: var(--background-neutral-primary);
+          }
+
+          &-active {
+            border-color: var(--stroke-colored-brand);
+            background-color: var(--background-brand-primary-subdued);
+
+            svg path {
+              fill: var(--icon-colored-brand);
+            }
+          }
         }
       }
     }
@@ -170,7 +181,7 @@
           }
 
           svg path {
-            fill: var(--icon-neutral-primary);
+            fill: var(--icon-neutral-tertiary);
           }
         }
       }
