@@ -104,19 +104,10 @@ export class AuthService {
   }
 
   #getMe(): Observable<UserInfo> {
-    return of({
-      id: 1,
-      documentId: 'string',
-      username: 'string',
-      email: 'string',
-      subscription: 'free',
-      avatarUrl: 'string',
-    });
     return this.#http.get<UserInfo>(`${this.#environment.apiUrl}/users/me`);
   }
 
   #isTokenStored(): boolean {
-    return true;
     return !!this.getToken();
   }
 
