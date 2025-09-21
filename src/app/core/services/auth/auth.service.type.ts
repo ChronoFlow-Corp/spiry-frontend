@@ -11,6 +11,8 @@ export interface UserInfo {
   readonly documentId: string;
   readonly username: string;
   readonly email: string;
+  readonly subscription: 'free' | 'premium';
+  readonly avatarUrl: string;
 }
 
 export interface AuthServiceState {
@@ -18,5 +20,6 @@ export interface AuthServiceState {
   readonly isAuthenticated: Signal<boolean>;
   readonly username: Signal<UserInfo['username'] | null>;
   readonly email: Signal<UserInfo['email'] | null>;
-  readonly initials: Signal<string>;
+  readonly subscription: Signal<UserInfo['subscription'] | null>;
+  readonly avatarUrl: Signal<UserInfo['avatarUrl'] | null>;
 }

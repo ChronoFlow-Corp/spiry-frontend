@@ -19,6 +19,7 @@ import {
   SuccessfulAuth,
   UserInfo,
 } from '@service/auth/auth.service.type';
+import {S} from '@angular/cdk/keycodes';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -31,13 +32,16 @@ export class AuthService {
   readonly #isAuthenticated = signal<boolean>(this.#isTokenStored());
   readonly #username = signal<UserInfo['username'] | null>(null);
   readonly #email = signal<UserInfo['email'] | null>(null);
+  readonly #subscription = signal<UserInfo['subscription'] | null>(null);
+  readonly #avatarUrl = signal<UserInfo['avatarUrl'] | null>(null);
 
   readonly state: AuthServiceState = {
     isAuthenticationInProgress: this.#isAuthenticationInProgress.asReadonly(),
     isAuthenticated: this.#isAuthenticated.asReadonly(),
     username: this.#username.asReadonly(),
     email: this.#email.asReadonly(),
-    initials: computed(() => this.#username()?.slice(0, 2) ?? ''),
+    subscription: this.#subscription.asReadonly(),
+    avatarUrl: this.#avatarUrl.asReadonly(),
   };
 
   getMe(): void {
@@ -48,9 +52,11 @@ export class AuthService {
 
     this.#getMe()
       .pipe(
-        tap(({username, email}) => {
+        tap(({username, email, subscription, avatarUrl}) => {
           this.#username.set(username);
           this.#email.set(email);
+          this.#subscription.set(subscription);
+          this.#avatarUrl.set(avatarUrl);
           this.#isAuthenticated.set(true);
         }),
         catchError(() => {
@@ -98,10 +104,19 @@ export class AuthService {
   }
 
   #getMe(): Observable<UserInfo> {
+    return of({
+      id: 1,
+      documentId: 'string',
+      username: 'string',
+      email: 'string',
+      subscription: 'free',
+      avatarUrl: 'string',
+    });
     return this.#http.get<UserInfo>(`${this.#environment.apiUrl}/users/me`);
   }
 
   #isTokenStored(): boolean {
+    return true;
     return !!this.getToken();
   }
 
@@ -114,5 +129,8 @@ export class AuthService {
     this.#isAuthenticationInProgress.set(false);
     this.#isAuthenticated.set(false);
     this.#username.set(null);
+    this.#email.set(null);
+    this.#subscription.set(null);
+    this.#avatarUrl.set(null);
   }
 }
