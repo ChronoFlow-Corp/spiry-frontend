@@ -76,7 +76,7 @@ export class TextContentConfigComponent implements OnInit {
   }
 
   back(): void {
-    this.#router.navigateByUrl('/web/category/text-content').then();
+    this.#router.navigateByUrl('/category/text-content').then();
   }
 
   updateConfig(updates: Partial<TextContentAICaptionGeneratorConfig>): void {
