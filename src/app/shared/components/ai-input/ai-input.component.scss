@@ -134,6 +134,12 @@
           background-color: var(--background-brand-primary-subdued);
         }
 
+        &.shared-ai-input__action-plus {
+          &:hover {
+            background-color: var(--background-neutral-primary);
+          }
+        }
+
         &.shared-ai-input__action-web {
           &:hover {
             background-color: var(--background-neutral-primary);

@@ -20,6 +20,7 @@
       position: absolute;
 
       font-family: var(--font-inter);
+      font-size: 0.875rem;
       left: calc(100% + 0.25rem);
       top: 50%;
       transform: translateY(-50%);
@@ -34,6 +35,7 @@
     }
 
     &:hover::after {
+      transition-delay: 1s;
       opacity: 1;
     }
   }
