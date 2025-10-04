@@ -1,8 +1,8 @@
 import {EnvironmentType} from './environment.type';
 
 export const environment: EnvironmentType = {
-  origin: 'http://test.spiry.space',
-  apiUrl: 'http://test.spiry.space:1337/api',
-  wsUrl: 'ws://test.spiry.space:1337/ai-proxy',
+  origin: 'http://194.180.207.167',
+  apiUrl: 'http://194.180.207.167:1337/api',
+  wsUrl: 'ws://194.180.207.167:1337/api/ws',
   debug: false,
 };

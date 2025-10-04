@@ -5,7 +5,7 @@ import {WebSocketService} from '@service/websocket/websocket.service';
 
 export const APP_INITIALIZERS = () => {
   initThemeService();
-  // initWebSocketService();
+  initWebSocketService();
 };
 
 const initThemeService = () => inject(ThemeService).init();
