@@ -29,6 +29,6 @@ export class SidebarDesktopDefaultViewComponent {
   readonly #router = inject(Router);
 
   goHome(): void {
-    this.#router.navigate(['/web']).then();
+    this.#router.navigateByUrl('/').then();
   }
 }

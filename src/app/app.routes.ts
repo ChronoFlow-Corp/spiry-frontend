@@ -1,9 +1,8 @@
 import {Routes} from '@angular/router';
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'web', pathMatch: 'full'},
   {
-    path: 'web',
+    path: '',
     loadComponent: () =>
       import('@pages/web/web.component').then((c) => c.WebComponent),
     children: [
@@ -35,8 +34,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@chat/chat.component').then((c) => c.ChatComponent),
       },
-      {path: '**', pathMatch: 'full', redirectTo: 'category/text-content'},
+      {path: '**', pathMatch: 'full', redirectTo: ''},
     ],
   },
-  {path: '**', redirectTo: 'web'},
 ];
