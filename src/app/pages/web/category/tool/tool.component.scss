@@ -1,0 +1,41 @@
+:host {
+  height: 100%;
+}
+
+.page-web-category-tool__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  svg {
+    width: 10.25rem;
+    height: 10.25rem;
+  }
+
+  &-text {
+    gap: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    &-title {
+      font-family: var(--font-bricolage-grotesque);
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 2rem;
+      letter-spacing: -0.03rem;
+    }
+
+    &-subtitle {
+      width: 24.625rem;
+      max-width: 100%;
+      color: var(--text-neutral-tertiary);
+      font-family: var(--font-inter);
+      font-size: 0.875rem;
+      line-height: 1.5rem;
+    }
+  }
+}
