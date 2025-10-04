@@ -1,41 +1,53 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, Signal, signal} from '@angular/core';
 
-import {Message} from '@store/chat/chat.store.type';
+import {Chat} from '@service/chat/chat.service.type';
+
+type ChatMap = Map<string, Chat>;
 
 @Injectable({providedIn: 'root'})
 export class ChatStore {
-  readonly #$messages: WritableSignal<Message[]> = signal([]);
-  readonly #$isMessageStreaming: WritableSignal<boolean> = signal(false);
+  readonly #chatsHistoryIsLoading = signal<boolean>(true);
+  readonly #chats = signal<ChatMap>(new Map());
+  readonly #currentChatId = signal<Chat['id'] | null>(null);
+  readonly #currentChat: Signal<Chat | undefined> = computed(() => {
+    const currentChatId = this.#currentChatId();
+    return currentChatId ? this.#chats().get(currentChatId) : undefined;
+  });
 
   readonly state = {
-    messages: this.#$messages.asReadonly(),
-    isMessageStreaming: this.#$isMessageStreaming.asReadonly(),
+    chatsIsLoading: this.#chatsHistoryIsLoading.asReadonly(),
+    chatsMap: this.#chats.asReadonly(),
+    chatsList: computed(() => Array.from(this.#chats().values())),
+    currentChatId: this.#currentChatId.asReadonly(),
+    currentChat: this.#currentChat,
   };
 
-  addMessage(message: Message): void {
-    this.#$messages.update((messages) => [
-      ...messages,
-      message,
-      {
-        role: 'ai',
-        content: '',
-        timestamp: Date.now(),
-      },
-    ]);
+  setChatsHistoryIsLoading(isLoading: boolean): void {
+    this.#chatsHistoryIsLoading.set(isLoading);
   }
 
-  updateIsMessageStreaming(isMessageStreaming: boolean): void {
-    this.#$isMessageStreaming.set(isMessageStreaming);
+  setChatsInitial(chats: Chat[]): void {
+    const map: ChatMap = new Map();
+    chats.forEach((chat) => map.set(chat.id, chat));
+    this.#chats.set(map);
   }
 
-  updateLastAIMessage(partialContent: string): void {
-    console.log('updateLastAIMessage', partialContent);
-
-    this.#$messages.update((messages) => {
-      const last = messages[messages.length - 1];
-      if (!last || last.role !== 'ai') return messages;
-
-      return [...messages.slice(0, -1), {...last, content: partialContent}];
-    });
+  upsertChat(chat: Chat): void {
+    const current: ChatMap = this.#chats();
+    const updated: ChatMap = new Map(current);
+    updated.set(chat.id, {...current.get(chat.id), ...chat});
+    this.#chats.set(updated);
   }
+
+  setCurrentChatId(chatId: string): void {
+    this.#currentChatId.set(chatId);
+  }
+
+  // getChatById(id: string): Signal<Chat | undefined> {
+  //   return computed(() => this.#chats().get(id));
+  // }
+
+  updateIsMessageStreaming(v: boolean): void {}
+
+  updateLastAIMessage(v: string): void {}
 }

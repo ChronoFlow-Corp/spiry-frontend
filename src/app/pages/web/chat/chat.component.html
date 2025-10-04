@@ -1,0 +1,9 @@
+@let currentChat = $currentChat();
+
+@if (currentChat) {
+  @if (currentChat.isLoading) {
+    loading....
+  } @else {
+    {{ currentChat | json }}
+  }
+}

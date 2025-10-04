@@ -19,27 +19,21 @@ import {LoaderComponent} from '@components/loader/loader.component';
 import {SidebarDesktopComponent} from '@components/sidebar-desktop/sidebar-desktop.component';
 import {AuthService} from '@service/auth/auth.service';
 import {SidebarSwitcherService} from '@service/sidebar-switcher/sidebar-switcher.service';
-import {SidebarDesktopStore} from '@store/sidebar-desktop/sidebar-desktop.store';
 import {ToolCategoryStore} from '@store/tool-category/tool-category.store';
 import {
   AVAILABLE_TOOL_CATEGORIES,
   ToolCategory,
 } from '@store/tool-category/tool-category.store.model';
+import {ChatStore} from '@store/chat/chat.store';
 
 @Component({
   selector: '.page-web',
-  imports: [
-    LoaderComponent,
-    AccountMenuComponent,
-    SidebarDesktopComponent,
-    RouterOutlet,
-  ],
+  imports: [LoaderComponent, SidebarDesktopComponent, RouterOutlet],
   templateUrl: './web.component.html',
   styleUrl: './web.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.flex]': 'true',
-    '[class.sidebar-desktop-collapsed]': '$isSidebarDesktopCollapsed()',
   },
 })
 export class WebComponent implements OnInit {
@@ -51,25 +45,20 @@ export class WebComponent implements OnInit {
   readonly #authService = inject(AuthService);
   readonly #sidebarSwitcherService = inject(SidebarSwitcherService);
   readonly #toolCategoryStore = inject(ToolCategoryStore);
-  readonly #sidebarDesktopStore = inject(SidebarDesktopStore);
+  readonly #chatStore = inject(ChatStore);
 
-  protected readonly $isSidebarDesktopCollapsed =
-    this.#sidebarDesktopStore.state.isCollapsed;
   protected readonly $isAuthenticationInProgress =
     this.#authService.state.isAuthenticationInProgress;
 
   ngOnInit(): void {
     this.#syncRouteToolCategoryWithStore();
+    this.#syncChatIdWithStore();
     this.#subscribeOnParamsEvents();
     this.#subscribeOnRouterEvents();
     this.#sidebarSwitcherService
       .responsiveSidebar()
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe();
-  }
-
-  toggleSidebarDesktopIsCollapsed(): void {
-    this.#sidebarDesktopStore.toggleIsCollapsed();
   }
 
   #handleProviderCallback(accessToken: string): void {
@@ -94,6 +83,8 @@ export class WebComponent implements OnInit {
   }
 
   #syncRouteToolCategoryWithStore(): void {
+    if (!this.#router.url.startsWith('/web/category/')) return;
+
     const urlSegments: readonly string[] = this.#router.url.split('/');
     let toolCategoryFromUrl: ToolCategory | null = null;
     let toolNameFromUrl: string | null = null;
@@ -125,11 +116,45 @@ export class WebComponent implements OnInit {
       this.#toolCategoryStore.selectTool(toolNameFromUrl);
   }
 
+  #syncChatIdWithStore(): void {
+    if (!this.#router.url.startsWith('/web/chat/')) return;
+
+    const chatId =
+      this.#activatedRoute.snapshot.firstChild?.paramMap.get('chatId');
+
+    if (chatId) {
+      this.#chatStore.setCurrentChatId(chatId);
+      return;
+    }
+
+    this.#findChatIdInUrl();
+  }
+
+  #findChatIdInUrl(): void {
+    const urlSegments: readonly string[] = this.#router.url.split('/');
+    let chatIdFromUrl: string | null = null;
+
+    const chatIdIndex = urlSegments.indexOf('chat');
+    if (chatIdIndex !== -1 && urlSegments.length > chatIdIndex + 1) {
+      const potentialChatId = urlSegments[chatIdIndex + 1];
+      if (potentialChatId) {
+        chatIdFromUrl = potentialChatId;
+
+        if (urlSegments.length > chatIdIndex + 2) {
+          chatIdFromUrl = urlSegments[chatIdIndex + 2];
+        }
+      }
+    }
+
+    if (chatIdFromUrl) this.#chatStore.setCurrentChatId(chatIdFromUrl);
+  }
+
   #subscribeOnRouterEvents(): void {
     this.#router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
+        filter((e) => e instanceof NavigationEnd),
         tap(() => this.#syncRouteToolCategoryWithStore()),
+        tap(() => this.#syncChatIdWithStore()),
         takeUntilDestroyed(this.#destroy),
       )
       .subscribe();

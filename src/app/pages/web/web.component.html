@@ -5,32 +5,7 @@
     <router-outlet />
   </div>
 
-  @if ($isSidebarDesktopCollapsed()) {
-    <button
-      class="page-web__sidebar-desktop-expand f-center ml-a c-pointer"
-      type="button"
-      (click)="toggleSidebarDesktopIsCollapsed()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M15.9167 8.00002C15.9167 8.41423 15.581 8.75002 15.1667 8.75002L5.9347 8.75002L9.07625 12.5199C9.34142 12.8381 9.29843 13.311 8.98022 13.5762C8.66201 13.8414 8.18909 13.7984 7.92391 13.4802L3.75725 8.48016C3.52548 8.20202 3.52548 7.79801 3.75725 7.51988L7.92391 2.51988C8.18909 2.20167 8.66201 2.15868 8.98022 2.42385C9.29843 2.68902 9.34142 3.16195 9.07625 3.48016L5.9347 7.25002L15.1667 7.25002C15.581 7.25002 15.9167 7.5858 15.9167 8.00002ZM1.00008 2.25002C1.41429 2.25002 1.75008 2.58581 1.75008 3.00002L1.75008 13C1.75008 13.4142 1.41429 13.75 1.00008 13.75C0.585866 13.75 0.250081 13.4142 0.250081 13L0.250081 3.00002C0.250081 2.58581 0.585867 2.25002 1.00008 2.25002Z"
-          fill="var(--icon-neutral-disabled)"
-        />
-      </svg>
-    </button>
-  }
-
   @if ($isAuthenticationInProgress()) {
     <div class="shared-global-loader"></div>
   }
-
-  <div class="shared-account-menu"></div>
 </div>

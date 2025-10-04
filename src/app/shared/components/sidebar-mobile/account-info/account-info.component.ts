@@ -24,5 +24,4 @@ export class SidebarMobileAccountInfoComponent {
 
   protected readonly $username = this.#authService.state.username;
   protected readonly $email = this.#authService.state.email;
-  protected readonly $initials = this.#authService.state.initials;
 }

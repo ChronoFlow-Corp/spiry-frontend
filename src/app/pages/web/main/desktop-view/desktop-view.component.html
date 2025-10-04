@@ -1,14 +1,18 @@
 @let templateShowMessages = $showMessages();
+
 <div
   [class.show-chat]="templateShowMessages"
   class="page-web-main-desktop-view__wrapper f-ai-center f-col w-100 h-100 no-scrollbar"
 >
   @if (templateShowMessages) {
-    <div class="page-web-main-messages" [messages]="$messages()"></div>
+    <div
+      class="page-web-main-messages"
+      [messages]="$currentChat()?.messages ?? []"
+    ></div>
 
     <div
       class="shared-ai-input"
-      (submit)="sendMessage($event)"
+      (submit)="send($event)"
       [disableSubmitButton]="$isMessageStreaming()"
     ></div>
   } @else {
@@ -19,7 +23,7 @@
 
     <div
       class="shared-ai-input"
-      (submit)="sendMessage($event)"
+      (submit)="send($event)"
       [disableSubmitButton]="$isMessageStreaming()"
     ></div>
   }

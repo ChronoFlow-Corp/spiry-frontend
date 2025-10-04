@@ -3,13 +3,12 @@ import {
   Component,
   inject,
   signal,
-  WritableSignal,
 } from '@angular/core';
 
 import {PageWebMainMessagesComponent} from '@pages/web/main/messages/messages.component';
-import {WebSocketService} from '@service/websocket/websocket.service';
 import {AiInputComponent} from '@shared/components/ai-input/ai-input.component';
 import {ChatStore} from '@store/chat/chat.store';
+import {ChatService} from '@service/chat/chat.service';
 
 @Component({
   selector: '.page-web-main-desktop-view',
@@ -20,24 +19,16 @@ import {ChatStore} from '@store/chat/chat.store';
 })
 export class PageWebMainDesktopViewComponent {
   readonly #chatStore = inject(ChatStore);
-  readonly #webSocketService = inject(WebSocketService);
+  readonly #chatService = inject(ChatService);
 
-  protected readonly $showMessages: WritableSignal<boolean> = signal(false);
-  protected readonly $messages = this.#chatStore.state.messages;
-  protected readonly $isMessageStreaming =
-    this.#chatStore.state.isMessageStreaming;
+  protected readonly $showMessages = signal<boolean>(false);
+  protected readonly $isMessageStreaming = signal<boolean>(false);
+  protected readonly $currentChat = this.#chatStore.state.currentChat;
 
-  sendMessage(message: string): void {
-    if (!this.$showMessages()) this.$showMessages.set(true);
-    this.#webSocketService.sendMessage({
-      type: 'ai-chat',
-      message,
-    });
-
-    this.#chatStore.addMessage({
-      role: 'user',
-      content: message,
-      timestamp: Date.now(),
-    });
+  send(message: string) {
+    this.$showMessages.set(true);
+    // const chat = this.$chat();
+    // if (chat) this.#chatService.sendMessage(chat.id, message);
+    // else this.#chatService.createChat(message);
   }
 }

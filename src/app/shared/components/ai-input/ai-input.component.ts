@@ -30,21 +30,17 @@ export class AiInputComponent {
   readonly #MIN_HEIGHT_PX = 22;
   readonly #MAX_HEIGHT_PX = 88;
 
-  readonly $disableSubmitButton: InputSignal<boolean> = input(false, {
+  readonly $disableSubmitButton = input<boolean>(false, {
     alias: 'disableSubmitButton',
   });
 
   submit: OutputEmitterRef<string> = output();
 
-  protected readonly inputEl: Signal<ElementRef | undefined> =
-    viewChild('input');
+  protected readonly inputEl = viewChild<ElementRef | undefined>('input');
 
   protected readonly $inputValue: WritableSignal<string> = signal('');
   protected readonly $webSearchEnabled: WritableSignal<boolean> = signal(false);
-  protected readonly $showWebSearchTooltip: WritableSignal<boolean> =
-    signal(false);
-  protected readonly $showDictationTooltip: WritableSignal<boolean> =
-    signal(false);
+  protected readonly $showWebSearchTooltip = signal<boolean>(false);
 
   constructor() {
     toObservable(this.$inputValue)

@@ -1,39 +1,17 @@
-<div class="shared-account-menu__wrapper">
+<div class="shared-account-menu__wrapper f-ai-center">
   @if ($isAuthenticated()) {
-    <div class="shared-account-menu__avatar f-center">
-      <p>{{ $initials() }}</p>
+    <img class="shared-account-menu__avatar" [ngSrc]="$avatarUrl() ?? ''" />
+
+    <div class="shared-account-menu__info f-col">
+      <p class="shared-account-menu__info-username">
+        {{ $username() }}
+      </p>
+
+      <p class="shared-account-menu__info-subscription">
+        {{ $subscription() }}
+      </p>
     </div>
   } @else {
-    <button
-      class="shared-account-menu__sign-in-button f-center c-pointer"
-      (click)="signIn()"
-    >
-      <div class="shared-account-menu__sign-in-button-icon-wrapper f-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-        >
-          <circle
-            cx="10.4167"
-            cy="5.66668"
-            r="3.66668"
-            fill="var(--icon-neutral-primary-inverse)"
-          />
-          <ellipse
-            opacity="0.4"
-            cx="10.4167"
-            cy="14.8334"
-            rx="6.41669"
-            ry="3.66668"
-            fill="var(--icon-neutral-primary-inverse)"
-          />
-        </svg>
-      </div>
-
-      <p class="shared-account-menu__sign-in-button-text">Sign In</p>
-    </button>
+    <button (click)="signIn()" class="w-100">sign in</button>
   }
 </div>

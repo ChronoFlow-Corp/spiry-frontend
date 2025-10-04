@@ -1,3 +1,5 @@
+@use 'components/sidebar-desktop' as sidebarDesktop;
+
 :host {
   height: 100%;
 }
@@ -5,49 +7,44 @@
 .shared-sidebar-desktop-default-view__wrapper {
   height: 100%;
   gap: 1rem;
-  padding: 0.75rem;
+  padding: 0.5rem;
 
-  .shared-sidebar-desktop-default-view__header {
-    padding: 0.25rem 0 0.25rem 0.5rem;
+  .shared-sidebar-desktop-default-view__header
+    .shared-sidebar-desktop-default-view__header-collapse-toggle,
+  .shared-sidebar-desktop-default-view__tabs
+    .shared-sidebar-desktop-default-view__tab {
+    position: relative;
 
-    &-logo {
-      gap: 0.5rem;
-      text-decoration: none;
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
 
-      img {
-        width: 2.25rem;
-        height: 2.25rem;
-      }
+      font-family: var(--font-inter);
+      font-size: 0.875rem;
+      left: calc(100% + 0.25rem);
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--background-neutral-primary-inverse);
+      color: var(--text-neutral-primary-inverse);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.6875rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease-out;
     }
 
-    &-title {
-      color: var(--text-neutral-primary);
-      font-feature-settings:
-        'liga' off,
-        'clig' off;
-      font-family: var(--font-bricolage-grotesque);
-      font-size: 1.2625rem;
-      font-weight: 700;
-      line-height: 1.7675rem;
-      letter-spacing: -0.088375rem;
-    }
-
-    .shared-sidebar-desktop-default-view__header-collapse-toggle {
-      border: none;
-      background-color: transparent;
+    &:hover::after {
+      transition-delay: 1s;
+      opacity: 1;
     }
   }
 
-  .shared-sidebar-desktop-default-view__tabs {
-    gap: 0.25rem;
-
-    .shared-sidebar-desktop-default-view__tab {
-      gap: 0.5rem;
-      padding: 0.5rem;
-
-      white-space: nowrap;
-
-      border-radius: 0.75rem;
+  .shared-sidebar-desktop-default-view__header {
+    &-logo {
+      padding: 0.3125rem;
+      border-radius: 0.625rem;
+      background-color: transparent;
 
       will-change: background-color;
       transition-property: background-color;
@@ -55,21 +52,112 @@
       transition-timing-function: ease-out;
 
       svg {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.625rem;
+        height: 1.625rem;
       }
 
-      &-title {
-        color: var(--text-neutral-primary);
-        font-family: var(--font-inter);
-        font-size: 0.875rem;
-        line-height: 1.5rem;
-        letter-spacing: -0.0175rem;
-      }
-
-      &.active {
-        background-color: var(--background-neutral-main);
+      &:hover {
+        background-color: var(--background-neutral-primary);
       }
     }
+
+    .shared-sidebar-desktop-default-view__header-collapse-toggle {
+      padding: 0.375rem;
+      border: none;
+      border-radius: 0.625rem;
+
+      background-color: transparent;
+
+      will-change: background-color;
+      transition-property: background-color;
+      transition-duration: 200ms;
+      transition-timing-function: ease-out;
+
+      &:hover {
+        background-color: var(--background-neutral-primary);
+      }
+    }
+
+    &.sidebar-collapsed {
+      justify-content: center;
+
+      .shared-sidebar-desktop-default-view__header-logo {
+        display: none;
+      }
+
+      .shared-sidebar-desktop-default-view__header-collapse-toggle {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .shared-sidebar-desktop-default-view__tabs
+    .shared-sidebar-desktop-default-view__tab {
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    white-space: nowrap;
+
+    border-radius: 0.75rem;
+
+    background-color: transparent;
+
+    will-change: background-color;
+    transition-property: background-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    &-title {
+      color: var(--text-neutral-primary);
+      font-family: var(--font-inter);
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      letter-spacing: -0.0175rem;
+
+      // will-change: sidebarDesktop.$collapse-tabs-content-will-change;
+      // transition-property: sidebarDesktop.$collapse-tabs-content-transition-property;
+      // transition-duration: sidebarDesktop.$collapse-tabs-content-transition-duration;
+      // transition-timing-function: sidebarDesktop.$collapse-tabs-content-timing-function;
+    }
+
+    &-search-chats {
+      margin-bottom: 0.75rem;
+    }
+
+    &-automation {
+      margin-bottom: 1rem;
+    }
+
+    &.sidebar-collapsed {
+      justify-content: center;
+
+      .shared-sidebar-desktop-default-view__tab-title {
+        display: none;
+      }
+    }
+
+    &.active {
+      background-color: var(--background-neutral-main);
+    }
+
+    &:hover {
+      background-color: var(--background-neutral-primary);
+    }
+  }
+
+  //.shared-sidebar-desktop-default-view__divider {
+  //  height: 0.0625rem;
+  //  background-color: var(--stroke-neutral-disabled);
+  //  border: none;
+  //}
+
+  .shared-sidebar-desktop-default-view__chats-history-scroll {
+    overflow-y: auto;
+    scrollbar-width: none;
   }
 }
